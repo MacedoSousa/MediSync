@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../app/acesso.php';
+require_once __DIR__ . '/api/acesso.php';
 
 $action = isset($_GET['action']) ? strtolower((string) $_GET['action']) : 'login';
 $action = in_array($action, ['login', 'register'], true) ? $action : 'login';

@@ -1,55 +1,39 @@
 <?php
+// Exoesqueleto do backend MediSync
 
-header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+// Autoload ou includes dos arquivos de classes
+require_once __DIR__ . '/../../app/core/Database.php';
+require_once __DIR__ . '/../../app/repositories/UserRepository.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit;
+// Exemplo de Controller
+class UserController {
+    public function login($request) {
+        // ...
+    }
+    public function register($request) {
+        // ...
+    }
+    public function getProfile($userId) {
+        // ...
+    }
 }
 
-require_once __DIR__ . '/../../app/acesso.php';
-
-function respond($ok, $message = '', $data = []){
-    echo json_encode([
-        'success' => (bool) $ok,
-        'message' => (string) $message,
-        'data'    => $data,
-    ], JSON_UNESCAPED_UNICODE);
-    exit;
+// Exemplo de Model
+class User {
+    public $id;
+    public $name;
+    public $email;
+    // ...
+    public function __construct($id, $name, $email) {
+        // ...
+    }
 }
 
-$raw = file_get_contents('php://input');
-$payload = json_decode($raw, true);
-
-if (!is_array($payload)) {
-    respond(false, 'Payload inválido.');
+// Exemplo de rota simples
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['REQUEST_URI'] === '/api/acesso.php') {
+    $controller = new UserController();
+    $controller->login($_POST);
 }
-
-$action = isset($payload['action']) ? strtolower((string) $payload['action']) : '';
-$username = isset($payload['username']) ? (string) $payload['username'] : '';
-$password = isset($payload['password']) ? (string) $payload['password'] : '';
-$empresa  = isset($payload['empresa']) ? (string) $payload['empresa'] : '';
-
-if ($action !== 'login' && $action !== 'register'){
-    respond(false, 'Ação inválida.');
-}
-
-$dados = [
-    'username' => $username,
-    'psswrd'   => $password,
-    'empresa'  => $empresa,
-];
-
-$acesso = new Inicializacao();
-
-ob_start();
-$ok = $acesso->Inicio($action === 'register' ? 'CADASTRAR' : 'LOGIN', $dados);
-$out = trim(ob_get_clean());
-
-respond((bool) $ok, $out);
-
+// Outras rotas podem ser adicionadas aqui
 
 
