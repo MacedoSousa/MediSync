@@ -22,16 +22,7 @@ button[type="submit"] { padding: 10px 12px; border: 0; border-radius: 8px; backg
   flex-direction: column;
   background: #0f172a;
 }
-.header {
-  background: linear-gradient(90deg, #2563eb 60%, #22c55e 100%);
-  color: #fff;
-  padding: 18px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
-}
+/* Header removed - styles kept for potential reuse but not rendered */
 .logo {
   font-weight: bold;
   font-size: 1.4rem;
@@ -47,40 +38,45 @@ button[type="submit"] { padding: 10px 12px; border: 0; border-radius: 8px; backg
   min-height: 0;
 }
 .sidebar {
-  width: 220px;
-  background: #1e293b;
-  color: #e5e7eb;
-  padding: 32px 0 0 0;
+  width: 260px;
+  background: #000000;
+  color: #ffffff;
+  padding: 24px 0 0 0;
   min-height: 100%;
-  box-shadow: 2px 0 8px rgba(16, 185, 129, 0.05);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
 }
 .sidebar nav {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding-left: 24px;
 }
 .sidebar a {
-  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 20px;
+  color: #d1d5db;
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 0;
+  font-size: 1rem;
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
 }
+.sidebar a svg { font-size: 1.2rem; }
 .sidebar-link.active {
-  background: #2563eb;
-  color: #fff;
+  background: #ffffff;
+  color: #000000;
 }
 .sidebar a:hover {
-  background: #2563eb;
-  color: #fff;
+  background: #4b5563;
+  color: #ffffff;
 }
 .main-content {
   flex: 1;
   padding: 32px 40px;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #ffffff;
+  color: #111827;
   border-radius: 0 0 12px 12px;
   min-height: 80vh;
 }

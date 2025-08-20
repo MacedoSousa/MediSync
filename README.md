@@ -1,5 +1,8 @@
 # MediSync
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ORG_KEY_medisync&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ORG_KEY_medisync)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ORG_KEY_medisync&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ORG_KEY_medisync)
+
 ## Visão e Escopo (Resumo)
 
 **Visão:** Plataforma centralizada para gestão de saúde, integrando pacientes, médicos, clínicas, hospitais e farmácias, promovendo praticidade, segurança e acessibilidade.
@@ -36,6 +39,35 @@
 ---
 
 Plataforma de saúde para facilitar o fluxo de agendamento de consultas e realização de exames, centralizando informações de histórico, receitas e uso de medicações.
+
+## ⚡️ Instalação rápida
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/seu-usuario/medisync.git && cd medisync
+
+# 2. Frontend
+cd frontend
+npm install
+npm run dev -- --host   # http://localhost:5173
+
+# 3. Backend (PHP 8.x)
+cd ..
+php -S 0.0.0.0:8000 -t public   # http://localhost:8000
+```
+
+Abra http://localhost:5173 no navegador. O frontend está configurado para encaminhar chamadas `/api/*` para o backend PHP na porta 8000 via proxy Vite.
+
+## 🆕 Melhorias recentes (2025-08)
+
+| Área | Descrição |
+|------|-----------|
+| **Frontend** | • Configurado **Vitest** + **React Testing Library** com cobertura LCOV.<br>• ESLint + Prettier (Airbnb) com script `npm run lint`.<br>• Refatorado `GeolocationPage` → componentes (`ActionCard`) + utils (`coords`). |
+| **Backend** | • PHPUnit atualizado, script `composer coverage` gera `coverage-php/coverage.xml`.<br>• **PHPStan** nível 5 incluído (`composer stan`). |
+| **Cache** | • Integração **Redis** via *Predis* com Docker Compose.<br>• `EstabelecimentoController` agora cacheia resultados Nominatim por 1h. |
+| **Qualidade de código** | • Arquivo `sonar-project.properties` configurado para PHP e JS/TS, cobertura e exclusões.<br>• Workflows CI prontos para testes, linters e análise Sonar (aguardam push para GitHub). |
+
+Para detalhes de arquivos e fluxo consulte `docs/FILES_OVERVIEW.md`.
 
 ## Fluxograma de Arquivos e Vínculos
 

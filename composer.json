@@ -1,0 +1,22 @@
+{
+  "name": "medisync/medisync",
+  "description": "MediSync backend",
+  "type": "project",
+  "require-dev": {
+    "phpunit/phpunit": "^10.0",
+    "phpstan/phpstan": "^1.11"
+  },
+  "autoload": {
+    "classmap": ["app/"]
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --colors=always",
+    "coverage": "phpdbg -qrr vendor/bin/phpunit --colors=always --coverage-clover coverage-php/coverage.xml",
+    "stan": "vendor/bin/phpstan analyse --memory-limit=1G"
+  },
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "require": {
+    "predis/predis": "^2.1"
+  }
+}

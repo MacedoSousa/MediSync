@@ -30,7 +30,6 @@ function Sidebar() {
             className={({ isActive }) =>
               `sidebar-link${isActive ? ' active' : ''}`
             }
-            style={{ display: 'flex', alignItems: 'center', gap: 8 }}
           >
             {item.icon} {item.label}
           </NavLink>

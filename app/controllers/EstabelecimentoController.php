@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../core/RedisClient.php';
 // require_once removido: Encryption não é utilizado aqui
 
 class EstabelecimentoController {
@@ -10,7 +11,7 @@ class EstabelecimentoController {
     }
 
     private function buscarEstabelecimentos($lat, $lng, $radius) {
-        $tipos = ['hospital', 'clinica', 'farmacia'];
+        $tipos = ['hospital', 'clinica', 'farmacia', 'doctor', 'dentista', 'laboratorio'];
         $estabelecimentos = [];
         foreach ($tipos as $tipo) {
             $estabelecimentos = array_merge($estabelecimentos, $this->buscarPorTipo($lat, $lng, $tipo, $radius));
@@ -20,11 +21,21 @@ class EstabelecimentoController {
 
     private function buscarPorTipo($lat, $lng, $tipo, $radius) {
         $tipoOSM = [
-            'hospital' => 'hospital',
-            'clinica' => 'clinic',
-            'farmacia' => 'pharmacy',
+            'hospital'    => 'hospital',
+            'clinica'     => 'clinic',
+            'farmacia'    => 'pharmacy',
+            'doctor'      => 'doctors',
+            'dentista'    => 'dentist',
+            'laboratorio' => 'laboratory',
         ];
         $q = $tipoOSM[$tipo] ?? $tipo;
+
+        // Redis cache key (rounded coords to 4 decimal places ~11m precision)
+        $redis = RedisClient::get();
+        $cacheKey = sprintf('est:%s:%0.4f:%0.4f:%d', $tipo, $lat, $lng, $radius);
+        if ($redis->exists($cacheKey)) {
+            return json_decode($redis->get($cacheKey), true);
+        }
         $url = "https://nominatim.openstreetmap.org/search?format=json&extratags=1&amenity=$q&limit=50&bounded=1&viewbox=";
         $dLat = $radius / 111320;
         $dLng = $radius / (40075000 * cos(deg2rad($lat)) / 360);
@@ -50,11 +61,17 @@ class EstabelecimentoController {
                     'lat'         => $latItem,
                     'lng'         => $lngItem,
                     'distancia_m' => $dist,
+                    'phone'       => $item['extratags']['phone'] ?? ($item['extratags']['contact:phone'] ?? null),
+                    'whatsapp'    => $item['extratags']['contact:whatsapp'] ?? null,
                 ];
             }
         }
         // Ordena pelo mais próximo primeiro
         usort($result, fn($a, $b) => $a['distancia_m'] <=> $b['distancia_m']);
+
+        // Salva cache por 1 hora
+        $redis->setex($cacheKey, 3600, json_encode($result));
+
         return $result;
     }
 
