@@ -259,3 +259,57 @@
 .utility-item span {
   font-weight: 600;
 }
+
+.place-details {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 1rem;
+  overflow-y: auto;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.05);
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute;
+  right: 8px;
+  top: 4px;
+}
+.routes a {
+  display: block;
+  margin: 0.5rem 0;
+  color: #1976d2;
+  text-decoration: none;
+}
+.routes a:hover { text-decoration: underline; }
+
+.location-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 1rem;
+  overflow-y: auto;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.05);
+  z-index: 1001;
+}
+.loc-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.loc-results li {
+  padding: 6px 4px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+.loc-results li:hover { background: #f5f5f5; }

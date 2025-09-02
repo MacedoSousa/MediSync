@@ -20,24 +20,6 @@
 **Stakeholders:** Pacientes, médicos, clínicas, hospitais, farmácias, órgãos reguladores.
 
 **Proposta de Valor:**
-
-## Path Note
-
-**Autor:** Pedro Macedo Sousa
-**Data:** 02/09/2025
-
-### Overview do Processo
-O desenvolvimento do MediSync seguiu uma abordagem modular e incremental, priorizando a experiência do usuário e a integração de funcionalidades essenciais para o ecossistema de saúde. O frontend foi estruturado com React, Vite e TypeScript, focando em responsividade, usabilidade e escalabilidade. As principais telas (Login, Cadastro, Dashboard, Perfil, Mapa) foram criadas com componentes reutilizáveis e estilos CSS modularizados. A integração de mapas utilizou `react-leaflet` para exibir serviços de saúde próximos ao usuário. O MVP do frontend está pronto para conexão com o backend, que será responsável por autenticação, APIs de mapas e dados médicos.
-
-### Alterações Realizadas
-- Estrutura inicial do frontend com React, Vite e TypeScript.
-- Telas de Login, Cadastro, Dashboard, Meu Perfil e Mapa implementadas.
-- Sidebar, InfoCards e componentes utilitários criados.
-- Integração de geolocalização e exibição de hospitais/farmácias no mapa.
-- Layout responsivo e refinamentos de UX (cores, gradientes, ícones, sombras).
-- Documentação expandida no README com instruções de execução e build.
-
----
 “Para pacientes que precisam organizar e acessar sua saúde com facilidade, o MediSync é a plataforma centralizada que integra clínicas, hospitais e farmácias, oferecendo agendamento, histórico médico, prescrições digitais seguras e acompanhamento de tratamentos – tudo em um só lugar.”
 
 **Escopo:**
@@ -144,3 +126,21 @@ Resumo do trabalho realizado hoje:
   - README expandido com instruções de execução (`npm install`, `npm run dev`).
 
 Status geral: frontend MVP navegável pronto para conectar ao backend (autenticação, APIs de mapas e saúde). Próximos passos incluem integração real de dados, protegendo rotas e testes.
+
+## Dev Note
+
+**Autor:** José Henrique Rampazzo Martins
+**Data:** 01/09/2025
+
+### Overview do Processo
+O desenvolvimento do MediSync seguiu uma abordagem modular e incremental, priorizando a experiência do usuário e a integração de funcionalidades essenciais para o ecossistema de saúde. O frontend foi estruturado com React, Vite e TypeScript, focando em responsividade, usabilidade e escalabilidade. As principais telas (Login, Cadastro, Dashboard, Perfil, Mapa) foram criadas com componentes reutilizáveis e estilos CSS modularizados. A integração de mapas utilizou `react-leaflet` para exibir serviços de saúde próximos ao usuário. O MVP do frontend está pronto para conexão com o backend, que será responsável por autenticação, APIs de mapas e dados médicos.
+
+### Alterações Realizadas
+- Estrutura inicial do frontend com React, Vite e TypeScript.
+- Telas de Login, Cadastro, Dashboard, Meu Perfil e Mapa implementadas.
+- Sidebar, InfoCards e componentes utilitários criados.
+- Integração de geolocalização e exibição de hospitais/farmácias no mapa.
+- Layout responsivo e refinamentos de UX (cores, gradientes, ícones, sombras).
+- Documentação expandida no README com instruções de execução e build.
+
+---
