@@ -144,3 +144,22 @@ O desenvolvimento do MediSync seguiu uma abordagem modular e incremental, priori
 - Documentação expandida no README com instruções de execução e build.
 
 ---
+
+## Dev Note - 03/09/2025 (criador: Pedro, pair-assistente, 22h00)
+
+Backend
+- Criada pasta `backend/services/PlaceService.php` com função `getPlaces` (consulta Overpass/OSM)
+- Endpoint simples `backend/api/places.php` (PHP) que retorna JSON de hospitais, clínicas, farmácias etc. Utiliza somente `require_once`, sem frameworks
+
+Frontend
+- `MapView.tsx` agora busca dados reais via endpoint PHP; removidos mocks
+- Marcadores coloridos (pacote leaflet-color-markers) e correção de tipagem
+- Drawer de detalhes compacto com imagem ilustrativa Unsplash, bordas arredondadas e z-index fixo
+- Opção de alterar localização continua (panel lateral + geocoding)
+- Criado `ProfileDrawer` acionado por “Meu Perfil” em qualquer tela através de `DrawerContext`
+- Telas de Login/Cadastro refinadas: ícones em inputs, validação inline, spinner loading, checkbox lembrar-me, força de senha em progresso
+
+Pendente / próximos passos
+- Substituir icons CDN por assets locais ou Awesome-Markers completos
+- Melhorar drawer de detalhe com fotos reais quando chave Google/Places disponível
+- Resolver linter: `eventHandlers` → usar `whenReady` assinatura correta ou cast MapContainerProps; (tratado em código)
