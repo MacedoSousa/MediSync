@@ -79,3 +79,23 @@ Abrir issues e pull requests com descrições claras. Padrões de commits, teste
 
 ## Licença
 A definir.
+
+## Como iniciar o Frontend
+
+### Ambiente de desenvolvimento
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+O Vite iniciará o servidor em <http://localhost:5173>.
+
+### Build de produção
+
+```bash
+npm run build
+```
+
+Os arquivos de saída ficarão na pasta `frontend/dist/`. Implemente-os em qualquer servidor estático de sua preferência.
