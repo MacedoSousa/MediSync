@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import InfoCards from '../components/InfoCards';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -13,8 +14,11 @@ function Login() {
 
   return (
     <div className="auth-page">
-      <div className="hero" />
+      <div className="hero" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <InfoCards />
+      </div>
       <div className="auth-container">
+        <h2 style={{ margin: 0, marginBottom: '1rem', color: '#00c853' }}>MediSync</h2>
         <h1>Entrar</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
@@ -35,7 +39,7 @@ function Login() {
               required
             />
           </label>
-          <button type="submit">Entrar</button>
+          <button type="submit" style={{ marginTop: '0.5rem' }}>Entrar</button>
         </form>
         <p>
           Não tem conta? <Link to="/register">Cadastre-se</Link>

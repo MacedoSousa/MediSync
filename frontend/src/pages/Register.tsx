@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import InfoCards from '../components/InfoCards';
 
 function Register() {
   const [name, setName] = useState('');
@@ -20,8 +21,11 @@ function Register() {
 
   return (
     <div className="auth-page">
-      <div className="hero" />
+      <div className="hero" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <InfoCards />
+      </div>
       <div className="auth-container">
+        <h2 style={{ margin: 0, marginBottom: '1rem', color: '#00c853' }}>MediSync</h2>
         <h1>Cadastrar</h1>
         <form onSubmit={handleSubmit} className="auth-form">
           <label>
@@ -60,7 +64,7 @@ function Register() {
               required
             />
           </label>
-          <button type="submit">Criar conta</button>
+          <button type="submit" style={{ marginTop: '0.5rem' }}>Criar conta</button>
         </form>
         <p>
           Já possui conta? <Link to="/login">Entrar</Link>

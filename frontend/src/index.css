@@ -5,6 +5,11 @@ body {
   display: flex;
 }
 
+#root {
+  flex: 1 1 0;
+  display: flex;
+}
+
 .auth-page {
   display: flex;
   flex: 1;
@@ -13,12 +18,16 @@ body {
 }
 
 .hero {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 100%;
-  background-image: url("https://images.unsplash.com/photo-1584467735871-b0d10c015b82?auto=format&fit=crop&w=1950&q=80");
-  background-size: cover;
-  background-position: center;
+  position: relative;
+  flex: 1 1 55%;
+  background-image: linear-gradient(135deg, rgba(26, 115, 232, 0.25), rgba(40, 167, 69, 0.25)), url("https://cdn.pixabay.com/photo/2017/10/06/18/31/group-2822423_1280.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-color: #eaf4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-container {
@@ -81,4 +90,15 @@ p a {
 
 p a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .auth-page {
+    flex-direction: column;
+  }
+  .hero {
+    flex: none;
+    height: 260px;
+    background-size: 300px;
+  }
 }

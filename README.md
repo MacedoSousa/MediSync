@@ -99,3 +99,30 @@ npm run build
 ```
 
 Os arquivos de saída ficarão na pasta `frontend/dist/`. Implemente-os em qualquer servidor estático de sua preferência.
+
+## Dev Note - 02/09/2025 (criador: Pedro, hora de término ~21:30)
+
+Resumo do trabalho realizado hoje:
+
+- Estrutura inicial de frontend React + Vite + TypeScript configurada.
+- Telas de **Login** e **Cadastro**:
+  - Sidebar escura com formulário validado.
+  - Hero à esquerda com imagem temática da saúde, gradiente e cards de notícias/contato.
+  - Layout responsivo (empilha em mobile).
+- **Dashboard**:
+  - Sidebar clara (Dashboard, Mapa, divisor, Meu Perfil).
+  - Banner colorido com CTAs, cards de estatísticas, atividades recentes e ações rápidas.
+- **Meu Perfil**:
+  - Card de usuário mock (avatar, dados pessoais) à esquerda.
+  - Cards utilitários (Saúde Geral, Receitas Ativas, Próximas Consultas) à direita.
+- **Mapa**:
+  - Integração `react-leaflet` + `leaflet`.
+  - Obtém geolocalização do usuário e exibe marcadores mock de hospitais/farmácias.
+- Componentização:
+  - `Sidebar`, `InfoCards`, estilos em CSS modularizado.
+- UX refinements:
+  - Logo MediSync, cores de ação, gradientes, sombras, ícones, responsividade.
+- Documentação:
+  - README expandido com instruções de execução (`npm install`, `npm run dev`).
+
+Status geral: frontend MVP navegável pronto para conectar ao backend (autenticação, APIs de mapas e saúde). Próximos passos incluem integração real de dados, protegendo rotas e testes.
