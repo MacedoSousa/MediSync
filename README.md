@@ -1,8 +1,4 @@
 # MediSync
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ORG_KEY_medisync&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ORG_KEY_medisync)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ORG_KEY_medisync&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ORG_KEY_medisync)
-
 ## Visão e Escopo (Resumo)
 
 **Visão:** Plataforma centralizada para gestão de saúde, integrando pacientes, médicos, clínicas, hospitais e farmácias, promovendo praticidade, segurança e acessibilidade.
@@ -40,130 +36,6 @@
 
 Plataforma de saúde para facilitar o fluxo de agendamento de consultas e realização de exames, centralizando informações de histórico, receitas e uso de medicações.
 
-## ⚡️ Instalação rápida
-
-```bash
-# 1. Clone o repositório
-git clone https://github.com/seu-usuario/medisync.git && cd medisync
-
-# 2. Frontend
-cd frontend
-npm install
-npm run dev -- --host   # http://localhost:5173
-
-# 3. Backend (PHP 8.x)
-cd ..
-php -S 0.0.0.0:8000 -t public   # http://localhost:8000
-```
-
-Abra http://localhost:5173 no navegador. O frontend está configurado para encaminhar chamadas `/api/*` para o backend PHP na porta 8000 via proxy Vite.
-
-## 🆕 Melhorias recentes (2025-08)
-
-| Área | Descrição |
-|------|-----------|
-| **Frontend** | • Configurado **Vitest** + **React Testing Library** com cobertura LCOV.<br>• ESLint + Prettier (Airbnb) com script `npm run lint`.<br>• Refatorado `GeolocationPage` → componentes (`ActionCard`) + utils (`coords`). |
-| **Backend** | • PHPUnit atualizado, script `composer coverage` gera `coverage-php/coverage.xml`.<br>• **PHPStan** nível 5 incluído (`composer stan`). |
-| **Cache** | • Integração **Redis** via *Predis* com Docker Compose.<br>• `EstabelecimentoController` agora cacheia resultados Nominatim por 1h. |
-| **Qualidade de código** | • Arquivo `sonar-project.properties` configurado para PHP e JS/TS, cobertura e exclusões.<br>• Workflows CI prontos para testes, linters e análise Sonar (aguardam push para GitHub). |
-
-Para detalhes de arquivos e fluxo consulte `docs/FILES_OVERVIEW.md`.
-
-## Fluxograma de Arquivos e Vínculos
-
-### Backend (PHP)
-
-- **Controllers** (`app/controllers/`)
-  - AlertController.php
-  - CrudController.php
-  - GeolocationController.php
-  - MeetingController.php
-  - MessageController.php
-  - PrescriptionController.php
-  - SchedulingController.php
-- **Repositórios** (`app/repositories/`)
-  - AlertRepository.php
-  - GenericRepository.php
-  - GeolocationRepository.php
-  - MeetingRepository.php
-  - MessageRepository.php
-  - PrescriptionRepository.php
-  - SchedulingRepository.php
-  - UserRepository.php
-- **Core** (`app/core/`)
-  - Database.php (conexão e queries)
-  - Encryption.php (criptografia de mensagens)
-  - LocalstackService.php (integração S3, SNS, SQS)
-- **Endpoints públicos** (`public/api/`)
-  - acesso.php (exemplo de endpoint de autenticação)
-- **Vínculos**:
-  - Controllers usam os Repositórios para acessar dados.
-  - Repositórios usam Database.php para persistência.
-  - Encryption e LocalstackService são utilitários usados por controllers/repositórios conforme necessário.
-
-### Frontend (React)
-
-- **Páginas** (`frontend/src/pages/`)
-  - AlertPage.jsx
-  - GeolocationPage.jsx (exibe mapa com localização do usuário usando OpenStreetMap, conforme ODbL)
-  - HomePage.jsx
-  - LayoutPage.jsx
-  - MapPage.jsx
-  - MeetingPage.jsx
-  - MessagePage.jsx
-  - PacientePage.jsx
-  - PrescriptionPage.jsx
-  - ReceitasPage.jsx
-  - SchedulingPage.jsx
-- **Componentes** (`frontend/src/components/`)
-  - Dashboard.jsx
-  - Login.jsx
-  - Register.jsx
-- **App.jsx**: Define as rotas e importa as páginas/componentes.
-- **main.jsx**: Ponto de entrada do React.
-
-### Relação Backend <-> Frontend
-- Cada funcionalidade do frontend possui sua própria página/component (ex: login, cadastro, agendamento, alertas, receitas, etc). Não há CRUD genérico para o usuário final.
-
----
-
-## Rotas Backend (exemplo)
-
-- `POST /api/acesso.php` — Login e cadastro
-- `POST /api/agendamento` — Criar agendamento
-- `GET /api/agendamento?id=...` — Buscar agendamento
-- `PUT /api/agendamento?id=...` — Atualizar agendamento
-- `DELETE /api/agendamento?id=...` — Cancelar agendamento (soft delete)
-- `GET /api/agendamento` — Listar agendamentos
-- (Repita para receitas, alertas, mensagens, reuniões, etc)
-
-## Rotas Frontend (React Router)
-
-- `/` — Dashboard
-- `/login` — Login
-- `/register` — Cadastro
-- `/crud` — CRUD genérico
-- `/geolocalizacao` — Geolocalização
-- `/agendamento` — Agendamento
-- `/agendamento-page` — Página de Agendamento
-- `/map` — Mapa
-- `/receitas` — Envio de Receitas
-- `/receitas-page` — Receitas
-- `/alertas` — Alertas
-- `/mensagens` — Mensagens
-- `/reunioes` — Reuniões e Chats
-- `/layout` — Layout
-- `/paciente` — Página do Paciente
-- `/home` — Home
-
----
-
-## Como navegar e programar
-- Para implementar uma funcionalidade, localize a página React correspondente e o controller/repositório PHP relacionado.
-- Siga o vínculo: Página → chamada REST → endpoint em `public/api/` → Controller → Repositório → Database/Core.
-- Consulte este fluxograma para entender rapidamente onde editar ou criar arquivos para cada funcionalidade.
-
----
 
 ## Funcionalidades previstas
 - Mapas com geolocalização, exibindo hospitais, clínicas médicas e farmácias ao redor do usuário (paciente)
@@ -189,11 +61,6 @@ Em desenvolvimento inicial. Este README será atualizado conforme os módulos fo
 
 ## Como executar (provisório)
 As instruções detalhadas de instalação e execução serão adicionadas quando os serviços estiverem disponíveis. Estrutura atual do repositório:
-
-```
-app/
-README.md
-```
 
 ## Segurança e LGPD
 - Autenticação com 2FA (planejado)
