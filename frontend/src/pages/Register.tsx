@@ -1,12 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import InfoCards from '../components/InfoCards';
+import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+
+const strength = (pwd:string)=>{
+  if(pwd.length>8 && /[A-Z]/.test(pwd) && /\d/.test(pwd)) return 'strong';
+  if(pwd.length>=6) return 'medium';
+  return 'weak';
+};
 
 function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [showPwd, setShowPwd] = useState(false);
+  const [strengthLevel,setStrength]=useState<'weak'|'medium'|'strong'>('weak');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  useEffect(()=>{ setStrength(strength(password));},[password]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -20,24 +20,6 @@
 **Stakeholders:** Pacientes, médicos, clínicas, hospitais, farmácias, órgãos reguladores.
 
 **Proposta de Valor:**
-
-## Path Note
-
-**Autor:** Pedro Macedo Sousa
-**Data:** 02/09/2025
-
-### Overview do Processo
-O desenvolvimento do MediSync seguiu uma abordagem modular e incremental, priorizando a experiência do usuário e a integração de funcionalidades essenciais para o ecossistema de saúde. O frontend foi estruturado com React, Vite e TypeScript, focando em responsividade, usabilidade e escalabilidade. As principais telas (Login, Cadastro, Dashboard, Perfil, Mapa) foram criadas com componentes reutilizáveis e estilos CSS modularizados. A integração de mapas utilizou `react-leaflet` para exibir serviços de saúde próximos ao usuário. O MVP do frontend está pronto para conexão com o backend, que será responsável por autenticação, APIs de mapas e dados médicos.
-
-### Alterações Realizadas
-- Estrutura inicial do frontend com React, Vite e TypeScript.
-- Telas de Login, Cadastro, Dashboard, Meu Perfil e Mapa implementadas.
-- Sidebar, InfoCards e componentes utilitários criados.
-- Integração de geolocalização e exibição de hospitais/farmácias no mapa.
-- Layout responsivo e refinamentos de UX (cores, gradientes, ícones, sombras).
-- Documentação expandida no README com instruções de execução e build.
-
----
 “Para pacientes que precisam organizar e acessar sua saúde com facilidade, o MediSync é a plataforma centralizada que integra clínicas, hospitais e farmácias, oferecendo agendamento, histórico médico, prescrições digitais seguras e acompanhamento de tratamentos – tudo em um só lugar.”
 
 **Escopo:**
@@ -144,3 +126,40 @@ Resumo do trabalho realizado hoje:
   - README expandido com instruções de execução (`npm install`, `npm run dev`).
 
 Status geral: frontend MVP navegável pronto para conectar ao backend (autenticação, APIs de mapas e saúde). Próximos passos incluem integração real de dados, protegendo rotas e testes.
+
+## Dev Note
+
+**Autor:** José Henrique Rampazzo Martins
+**Data:** 01/09/2025
+
+### Overview do Processo
+O desenvolvimento do MediSync seguiu uma abordagem modular e incremental, priorizando a experiência do usuário e a integração de funcionalidades essenciais para o ecossistema de saúde. O frontend foi estruturado com React, Vite e TypeScript, focando em responsividade, usabilidade e escalabilidade. As principais telas (Login, Cadastro, Dashboard, Perfil, Mapa) foram criadas com componentes reutilizáveis e estilos CSS modularizados. A integração de mapas utilizou `react-leaflet` para exibir serviços de saúde próximos ao usuário. O MVP do frontend está pronto para conexão com o backend, que será responsável por autenticação, APIs de mapas e dados médicos.
+
+### Alterações Realizadas
+- Estrutura inicial do frontend com React, Vite e TypeScript.
+- Telas de Login, Cadastro, Dashboard, Meu Perfil e Mapa implementadas.
+- Sidebar, InfoCards e componentes utilitários criados.
+- Integração de geolocalização e exibição de hospitais/farmácias no mapa.
+- Layout responsivo e refinamentos de UX (cores, gradientes, ícones, sombras).
+- Documentação expandida no README com instruções de execução e build.
+
+---
+
+## Dev Note - 03/09/2025 (criador: Pedro, pair-assistente, 22h00)
+
+Backend
+- Criada pasta `backend/services/PlaceService.php` com função `getPlaces` (consulta Overpass/OSM)
+- Endpoint simples `backend/api/places.php` (PHP) que retorna JSON de hospitais, clínicas, farmácias etc. Utiliza somente `require_once`, sem frameworks
+
+Frontend
+- `MapView.tsx` agora busca dados reais via endpoint PHP; removidos mocks
+- Marcadores coloridos (pacote leaflet-color-markers) e correção de tipagem
+- Drawer de detalhes compacto com imagem ilustrativa Unsplash, bordas arredondadas e z-index fixo
+- Opção de alterar localização continua (panel lateral + geocoding)
+- Criado `ProfileDrawer` acionado por “Meu Perfil” em qualquer tela através de `DrawerContext`
+- Telas de Login/Cadastro refinadas: ícones em inputs, validação inline, spinner loading, checkbox lembrar-me, força de senha em progresso
+
+Pendente / próximos passos
+- Substituir icons CDN por assets locais ou Awesome-Markers completos
+- Melhorar drawer de detalhe com fotos reais quando chave Google/Places disponível
+- Resolver linter: `eventHandlers` → usar `whenReady` assinatura correta ou cast MapContainerProps; (tratado em código)

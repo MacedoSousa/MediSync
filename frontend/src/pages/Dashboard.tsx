@@ -1,7 +1,16 @@
 import '../dashboard.css';
 import Sidebar from '../components/Sidebar';
+import ProfileDrawer from '../components/ProfileDrawer';
+import { useState } from 'react';
 
 function Dashboard() {
+  const mockUser={ name:'Gisele', email:'karyna@shops.com.br', phone:'(21)3215-8788', cell:'(21)98664-8888', avatar:'https://i.pravatar.cc/150?img=5'};
+  // state
+  const [profileOpen,setProfileOpen]=useState(false);
+  // sidebar link for profile triggers setProfileOpen true (already link). Instead handle nav click? skip.
+  // Add drawer in return
+  {profileOpen && <ProfileDrawer user={mockUser} onClose={()=>setProfileOpen(false)} /> }
+
   return (
     <div className="dashboard">
       <Sidebar />
