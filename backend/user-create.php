@@ -11,14 +11,29 @@ $inputFileName = 'C:\Users\Soluço\Desktop\Project\MediSync\Dados-login.xlsx';
 $spreadsheet = IOFactory::load($inputFileName);
 $sheet = $spreadsheet->getActiveSheet();
 
-
-// Get the active worksheet
 $sheet = $spreadsheet->getActiveSheet();
 
-// Set cell values
-$sheet->setCellValue('A10', 'Lucy Melomark');
-$sheet->setCellValue('B10', 'melo@gmail.com');
-$sheet->setCellValue('C10', '123@dxd');
+// Encontrar a primeira linha vazia na coluna A
+
+// Encontrar a primeira linha vazia na coluna A e obter o último ID
+$row = 1;
+$lastId = 0;
+while ($sheet->getCell('A' . $row)->getValue() !== null && $sheet->getCell('A' . $row)->getValue() !== '') {
+	$cellValue = $sheet->getCell('A' . $row)->getValue();
+	if (is_numeric($cellValue) && $cellValue > $lastId) {
+		$lastId = (int)$cellValue;
+	}
+	$row++;
+}
+
+// Novo ID é o último encontrado + 1
+$newId = $lastId + 1;
+
+// Escrever os dados na primeira linha vazia
+$sheet->setCellValue('A' . $row, $newId);
+$sheet->setCellValue('B' . $row, 'Lokan');
+$sheet->setCellValue('C' . $row, 'lk@gmail.com');
+$sheet->setCellValue('D' . $row, '123@2d');
 
 // Create an Xlsx writer
 $writer = new Xlsx($spreadsheet);
