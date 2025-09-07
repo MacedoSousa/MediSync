@@ -11,8 +11,6 @@ $inputFileName = 'C:\Users\Soluço\Desktop\Project\MediSync\Dados-login.xlsx';
 $spreadsheet = IOFactory::load($inputFileName);
 $sheet = $spreadsheet->getActiveSheet();
 
-$sheet = $spreadsheet->getActiveSheet();
-
 // Encontrar a primeira linha vazia na coluna A
 
 // Encontrar a primeira linha vazia na coluna A e obter o último ID
