@@ -13,12 +13,15 @@ export default function AssistiveSummaryScreen() {
   const { isAuthenticated, loading } = useAuth();
   const [summary, setSummary] = useState<AssistiveSummary>();
   const [mode, setMode] = useState<"model" | "deterministic_fallback">();
+  const [reviewId, setReviewId] = useState<string>();
   const mutation = trpc.assistiveSummary.generateDemoMine.useMutation({
     onSuccess: (result) => {
       setSummary(result.summary);
       setMode(result.mode);
+      setReviewId(result.reviewId);
     },
   });
+  const feedbackMutation = trpc.assistiveGovernance.submitFeedbackMine.useMutation();
 
   const isBusy = loading || mutation.isPending;
 
@@ -42,6 +45,16 @@ export default function AssistiveSummaryScreen() {
             </View>
             <Pressable
               accessibilityRole="button"
+              accessibilityLabel="Ver como a IA usa os dados e alterar sua preferência"
+              onPress={() => router.push("../ai-transparency")}
+              style={({ pressed }) => [styles.transparencyButton, pressed && styles.backButtonPressed]}
+            >
+              <MaterialIcons name="visibility" size={20} color="#075985" />
+              <Text style={styles.transparencyText}>Como a IA usa seus dados e seus limites</Text>
+              <MaterialIcons name="arrow-forward" size={18} color="#075985" />
+            </Pressable>
+            <Pressable
+              accessibilityRole="button"
               accessibilityLabel="Abrir acesso de emergência ao SAMU 192"
               onPress={() => router.push("../emergency")}
               style={({ pressed }) => [styles.emergencyButton, pressed && styles.emergencyButtonPressed]}
@@ -62,6 +75,7 @@ export default function AssistiveSummaryScreen() {
             {!isAuthenticated && !loading && <Text style={styles.helpText}>Entre na sua conta para gerar e auditar o resumo protegido.</Text>}
             {mutation.isError && <View style={styles.errorCard}><MaterialIcons name="error-outline" size={20} color="#B42318" /><Text style={styles.errorText}>O resumo não pôde ser gerado agora. Nenhum registro foi alterado.</Text></View>}
             {summary && <View style={styles.disclaimerCard}><Text style={styles.disclaimerText}>{summary.disclaimer}</Text><Text style={styles.modeText}>{mode === "model" ? "Resumo estruturado pelo assistente" : "Resumo determinístico de segurança"}</Text></View>}
+            {summary && reviewId ? <View style={styles.feedbackCard}><Text style={styles.feedbackTitle}>Este resumo foi útil?</Text><Text style={styles.feedbackText}>Seu retorno não altera seus registros e pode acionar revisão humana de segurança.</Text><View style={styles.feedbackActions}><Pressable disabled={feedbackMutation.isPending} onPress={() => feedbackMutation.mutate({ reviewId, feedback: "helpful" })} style={({ pressed }) => [styles.feedbackButton, pressed && styles.backButtonPressed]}><Text style={styles.feedbackButtonText}>Útil</Text></Pressable><Pressable disabled={feedbackMutation.isPending} onPress={() => feedbackMutation.mutate({ reviewId, feedback: "not_helpful" })} style={({ pressed }) => [styles.feedbackButton, pressed && styles.backButtonPressed]}><Text style={styles.feedbackButtonText}>Não ajudou</Text></Pressable><Pressable disabled={feedbackMutation.isPending} onPress={() => feedbackMutation.mutate({ reviewId, feedback: "safety_concern" })} style={({ pressed }) => [styles.feedbackWarningButton, pressed && styles.backButtonPressed]}><Text style={styles.feedbackWarningText}>Sinal de segurança</Text></Pressable></View>{feedbackMutation.isSuccess ? <Text style={styles.feedbackSaved}>Retorno registrado.</Text> : null}</View> : null}
             {summary && <Text style={styles.listTitle}>Registros organizados</Text>}
           </>
         }
@@ -107,4 +121,15 @@ const styles = StyleSheet.create({
   modeText: { color: "#526070", fontSize: 12, fontWeight: "700" },
   safetyCard: { alignItems: "flex-start", backgroundColor: "#E0F2FE", borderColor: "#BAE6FD", borderRadius: 16, borderWidth: 1, flexDirection: "row", gap: 10, marginTop: 20, padding: 14 },
   safetyText: { color: "#24506A", flex: 1, fontSize: 13, lineHeight: 19 },
+  transparencyButton: { alignItems: "center", backgroundColor: "#FFFFFF", borderColor: "#BAE6FD", borderRadius: 14, borderWidth: 1, flexDirection: "row", gap: 9, marginTop: 12, minHeight: 48, paddingHorizontal: 14 },
+  transparencyText: { color: "#075985", flex: 1, fontSize: 14, fontWeight: "800" },
+  feedbackCard: { backgroundColor: "#F8FAFC", borderColor: "#DCE8EE", borderRadius: 16, borderWidth: 1, gap: 8, marginTop: 16, padding: 14 },
+  feedbackTitle: { color: "#172033", fontSize: 15, fontWeight: "800" },
+  feedbackText: { color: "#526070", fontSize: 12, lineHeight: 18 },
+  feedbackActions: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 2 },
+  feedbackButton: { borderColor: "#9DB8C6", borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 9 },
+  feedbackButtonText: { color: "#075985", fontSize: 12, fontWeight: "800" },
+  feedbackWarningButton: { backgroundColor: "#FFF7F6", borderColor: "#FECDCA", borderRadius: 10, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 9 },
+  feedbackWarningText: { color: "#B42318", fontSize: 12, fontWeight: "800" },
+  feedbackSaved: { color: "#166534", fontSize: 12, fontWeight: "700" },
 });

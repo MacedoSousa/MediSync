@@ -29,7 +29,7 @@ export async function generateAssistiveSummary(input: {
   authorizedSyntheticRecords: readonly HealthTimelineEntry[];
   generatedAt: Date;
 }): Promise<{ summary: AssistiveSummary; mode: "model" | "deterministic_fallback" }> {
-  assertAssistiveAgentEnabled(getAssistiveAgentControl());
+  assertAssistiveAgentEnabled(await getAssistiveAgentControl());
   const fallback = createAssistiveSummary({
     patientId: input.patientId,
     records: input.authorizedSyntheticRecords,

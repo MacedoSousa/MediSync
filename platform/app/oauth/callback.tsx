@@ -34,6 +34,7 @@ export default function OAuthCallback() {
               const userInfo: Auth.User = {
                 id: apiUser.id,
                 openId: apiUser.openId,
+                role: apiUser.role,
                 name: apiUser.name,
                 email: apiUser.email,
                 loginMethod: apiUser.loginMethod,
@@ -146,6 +147,7 @@ export default function OAuthCallback() {
             const userInfo: Auth.User = {
               id: result.user.id,
               openId: result.user.openId,
+              role: result.user.role === "admin" ? "admin" : "user",
               name: result.user.name,
               email: result.user.email,
               loginMethod: result.user.loginMethod,

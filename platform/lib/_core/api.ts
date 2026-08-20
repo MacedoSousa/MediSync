@@ -96,6 +96,7 @@ export async function logout(): Promise<void> {
 export async function getMe(): Promise<{
   id: number;
   openId: string;
+  role: "user" | "admin";
   name: string | null;
   email: string | null;
   loginMethod: string | null;

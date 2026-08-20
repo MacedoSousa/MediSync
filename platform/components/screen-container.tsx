@@ -1,6 +1,7 @@
 import { Platform, StyleSheet, View, type ViewProps } from "react-native";
 import { SafeAreaView, type Edge, useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { getSafeAreaTopCompensation } from "@/shared/mobile-platform-parity";
 import { cn } from "@/lib/utils";
 
 export interface ScreenContainerProps extends ViewProps {
@@ -48,7 +49,7 @@ export function ScreenContainer({
   ...props
 }: ScreenContainerProps) {
   const insets = useSafeAreaInsets();
-  const missingIosTopInset = Platform.OS === "ios" && insets.top < 24 ? 56 : 0;
+  const missingIosTopInset = getSafeAreaTopCompensation(Platform.OS, insets.top);
 
   return (
     <View

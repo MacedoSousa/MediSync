@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { ScreenHeader } from "@/components/medsync/screen-header";
 import { ScreenContainer } from "@/components/screen-container";
+import { useAuth } from "@/hooks/use-auth";
 
 interface CareActionProps {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
@@ -34,6 +35,7 @@ function CareAction({ icon, title, description, onPress }: CareActionProps) {
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <ScreenContainer className="px-5" containerClassName="bg-background">
@@ -94,6 +96,14 @@ export default function HomeScreen() {
           <MaterialIcons name="info-outline" size={18} color="#075985" />
           <Text style={styles.noteText}>O MedSync não realiza diagnóstico, prescrição, triagem ou decisão de encaminhamento.</Text>
         </View>
+        {user?.role === "admin" ? (
+          <CareAction
+            icon="admin-panel-settings"
+            title="Governança assistiva"
+            description="Revisar regras, sinais de segurança e métricas administrativas."
+            onPress={() => router.push("/ai-governance")}
+          />
+        ) : null}
       </ScrollView>
     </ScreenContainer>
   );

@@ -97,6 +97,8 @@ export default function RootLayout() {
               <Stack.Screen name="health-assets" />
               <Stack.Screen name="health-asset-detail" />
               <Stack.Screen name="assistive-summary" />
+              <Stack.Screen name="ai-transparency" />
+              <Stack.Screen name="ai-governance" />
               <Stack.Screen name="emergency" />
               <Stack.Screen name="oauth/callback" />
           </Stack>

@@ -4,14 +4,16 @@
 
 As histórias US-001 a US-019 possuem implementações e regressões no projeto: identidade, responsável legal, cuidador, consentimento, auditoria, contatos cifrados, linha do tempo demonstrativa, contrato de importação, medicamentos e lembretes, agenda confirmada e reagendamento rastreável. A US-021 adiciona resumo assistivo com evidências e bloqueios; a contingência de emergência não depende de IA.
 
+As histórias internas US-022, US-023, US-030 e US-031 também estão concluídas. A plataforma inclui fila administrativa de regras da IA, aprovação ou rejeição auditável, métricas agregadas sem conteúdo clínico, tela de transparência e desligamento individual, contratos de área segura/haptics/lembretes para iOS e observabilidade HTTP com `X-Correlation-Id`, logs sanitizados e verificação não destrutiva de recuperação.
+
 ## Implementado com ativação externa pendente
 
 | Item | Estado técnico | Bloqueio para produção |
 |---|---|---|
 | US-020, parceiro de agenda | Adaptador, validação, correlação e idempotência demonstrativos. | Homologação, credenciais, contrato e observabilidade do parceiro. |
-| US-022, governança da IA | Catálogo, bloqueio, revisão e persistência de metadados iniciados. | Processo humano formal, responsáveis, métricas e política de aprovação. |
+| Governança produtiva da IA | Fila administrativa, papéis, decisão auditável, métricas agregadas e desligamento técnico implementados. | Nomeação dos responsáveis, critérios clínicos formais e aprovação institucional das regras. |
 | RNDS/FHIR | Contrato interno e fronteira de validação. | Processo institucional, perfis, ambiente e homologação RNDS. |
-| Farmácias, operadoras e emergência institucional | Somente limites e contratos de arquitetura. | Fontes oficiais, autorização, SLAs e acordos regulatórios. |
+| US-024 a US-029, parceiros institucionais | Limites, contratos e pontos de extensão documentados. | Fontes oficiais, autorização, SLAs, contratos e acordos regulatórios. |
 
 ## Itens não caracterizados como serviço clínico
 
@@ -19,4 +21,4 @@ Dados, imagens, documentos e consultas exibidos pelo modo demonstrativo são sin
 
 ## Próximo ciclo de engenharia
 
-Concluir a governança administrativa da IA, documentar critérios de homologação de parceiros, instituir pipeline de CI e implementar portais institucionais apenas com fontes contratuais autorizadas. O quadro detalhado e histórico de execução permanecem em [`todo.md`](../todo.md) e [`BACKLOG.md`](../BACKLOG.md).
+Instituir pipeline de CI, formalizar os critérios de homologação de parceiros e implementar integrações institucionais somente com fontes contratuais autorizadas. A primeira entrega produtiva deve incluir validação em iPhone físico, testes de restauração em ambiente isolado e revisão humano-clínica da governança da IA. O quadro detalhado e histórico de execução permanecem em [`todo.md`](../todo.md) e [`BACKLOG.md`](../BACKLOG.md).

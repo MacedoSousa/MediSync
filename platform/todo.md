@@ -13,8 +13,8 @@
 - [x] Implementar armazenamento seguro e sessão protegida no aplicativo.
 - [x] Implementar histórico de saúde e medicamentos com dados de demonstração não clínicos.
 - [x] Implementar agenda e solicitação de reagendamento sem confirmação automática.
-- [ ] Implementar delegação de cuidador, lembretes e registros de tomada.
-- [ ] Implementar central de alertas assistivos com fonte, contexto e ação segura.
+- [x] Implementar delegação de cuidador, lembretes e registros de tomada.
+- [x] Implementar central de alertas assistivos com fonte, contexto e ação segura.
 - [x] Implementar privacidade, consentimentos e trilha de auditoria visível ao paciente.
 - [x] Gerar identidade visual original e configurar os ícones do aplicativo.
 - [ ] Validar critérios de aceite do MVP sob a perspectiva do paciente, clínica e farmácia.
@@ -46,20 +46,20 @@
 - [x] US-020 — Implementar adaptador seguro de agenda para parceiro demonstrativo; a habilitação produtiva continua bloqueada até a homologação externa.
 - [ ] US-020 — Homologar contrato e credenciais de parceiro real antes de habilitar atualizações externas em produção; o adaptador demonstrativo seguro está implementado.
 - [x] US-021 — Implementar resumo de IA assistivo com evidências.
-- [ ] US-022 — Implementar governança, revisão e desligamento do agente de IA.
-- [ ] US-023 — Informar uso e limites da IA ao paciente.
+- [x] US-022 — Implementar governança administrativa, fila humana de revisão, métricas agregadas auditáveis e desligamento seguro do agente de IA.
+- [x] US-023 — Informar uso e limites da IA ao paciente, com preferência revogável, acesso à contingência e retorno seguro para revisão humana.
 - [ ] US-024 — Implementar busca de medicamento em farmácias parceiras.
 - [ ] US-025 — Implementar consulta de estado de receita digital autorizada.
 - [ ] US-026 — Implementar portal Web segregado por organização.
 - [ ] US-027 — Implementar fila institucional de solicitações de agenda.
 - [ ] US-028 — Implementar consulta de cobertura de operadoras autorizadas.
 - [ ] US-029 — Implementar painel regulatório de capacidade hospitalar com decisão humana.
-- [ ] US-030 — Validar paridade segura do núcleo no iOS.
-- [ ] US-031 — Implementar observabilidade, resposta a incidentes e recuperação testada.
+- [x] US-030 — Validar paridade segura do núcleo no iOS por contratos de área segura, haptics, lembretes locais e configuração Expo; a aceitação em dispositivo físico permanece necessária antes de produção.
+- [x] US-031 — Implementar observabilidade com correlação HTTP sanitizada, runbook de incidentes e verificação de recuperação não destrutiva aprovada.
 - [x] Executar autonomamente a US-002 conforme critérios de segurança, testes e revisão técnica definidos.
 - [ ] Concluir continuamente as US-003 a US-031 na ordem de prioridade, dependência e segurança definida no backlog.
 - [ ] Garantir que cada US restante tenha comportamento, acessibilidade e segurança equivalentes em Android, iOS e Web.
-- [ ] Validar a experiência Web responsiva e a paridade iOS antes da conclusão da US-030.
+- [x] Validar a experiência Web responsiva e a paridade iOS antes da conclusão da US-030.
 - [x] Ampliar a responsividade visual e a acessibilidade de telas críticas para Android, iOS e Web.
 - [x] Estruturar documentos, resultados de exame e imagens sintéticas cifradas, rotuladas e auditáveis para testes.
 - [ ] Criar ativos fictícios de imagem clínica para demonstração, sem uso diagnóstico ou dados de pessoas reais.
@@ -71,7 +71,7 @@
 - [x] Diagnosticar e corrigir falhas de login que encerram ou bloqueiam o aplicativo.
 - [x] Restaurar o fluxo de criação e visualização de agendamentos para usuários autenticados.
 - [x] Criar composição Docker não destrutiva para banco MySQL, API e interface Web do MedSync.
-- [ ] Popular o ambiente demonstrativo com histórico, agendamentos, imagens e documentos estritamente sintéticos.
+- [x] Popular o ambiente demonstrativo com histórico, agendamentos, imagens e documentos estritamente sintéticos.
 - [x] Corrigir o callback de login que falha para a conta do usuário sem expor dados de sessão.
 - [x] Corrigir a sobreposição do cabeçalho com a Dynamic Island/status bar e refinar a navegação em telas compactas.
 - [x] Consolidar documentação técnica completa de arquitetura, dados, APIs, segurança, IA, Docker, testes e operação.

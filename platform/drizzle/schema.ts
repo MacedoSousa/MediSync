@@ -27,6 +27,7 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  assistiveAgentEnabled: boolean("assistiveAgentEnabled").default(true).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -359,11 +360,15 @@ export const auditEvents = mysqlTable("auditEvents", {
     "reschedule_status_updated",
     "synthetic_asset_viewed",
     "assistive_summary_generated",
+    "assistive_preference_updated",
+    "assistive_governance_rule_reviewed",
+    "assistive_response_reviewed",
+    "assistive_feedback_recorded",
   ]).notNull(),
-  resourceType: mysqlEnum("resourceType", ["legal_representative", "caregiver_grant", "consent", "health_record", "care_contact", "medication_intake", "medication_routine", "appointment", "reschedule_request", "synthetic_health_asset", "assistive_summary"])
+  resourceType: mysqlEnum("resourceType", ["legal_representative", "caregiver_grant", "consent", "health_record", "care_contact", "medication_intake", "medication_routine", "appointment", "reschedule_request", "synthetic_health_asset", "assistive_summary", "assistive_preference", "assistive_governance_rule", "assistive_response_review"])
     .notNull(),
   resourceId: varchar("resourceId", { length: 64 }).notNull(),
-  purpose: mysqlEnum("purpose", ["access_control", "caregiver_support", "privacy_management", "clinical_record_access", "care_coordination"])
+  purpose: mysqlEnum("purpose", ["access_control", "caregiver_support", "privacy_management", "clinical_record_access", "care_coordination", "ai_governance"])
     .notNull(),
   outcome: mysqlEnum("outcome", ["success", "denied"]).notNull(),
   correlationId: varchar("correlationId", { length: 64 }).notNull(),

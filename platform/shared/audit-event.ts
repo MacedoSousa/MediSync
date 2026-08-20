@@ -16,10 +16,14 @@ export const auditActions = [
   "reschedule_status_updated",
   "synthetic_asset_viewed",
   "assistive_summary_generated",
+  "assistive_preference_updated",
+  "assistive_governance_rule_reviewed",
+  "assistive_response_reviewed",
+  "assistive_feedback_recorded",
 ] as const;
 
-export const auditResourceTypes = ["legal_representative", "caregiver_grant", "consent", "health_record", "care_contact", "medication_intake", "medication_routine", "appointment", "reschedule_request", "synthetic_health_asset", "assistive_summary"] as const;
-export const auditPurposes = ["access_control", "caregiver_support", "privacy_management", "clinical_record_access", "care_coordination"] as const;
+export const auditResourceTypes = ["legal_representative", "caregiver_grant", "consent", "health_record", "care_contact", "medication_intake", "medication_routine", "appointment", "reschedule_request", "synthetic_health_asset", "assistive_summary", "assistive_preference", "assistive_governance_rule", "assistive_response_review"] as const;
+export const auditPurposes = ["access_control", "caregiver_support", "privacy_management", "clinical_record_access", "care_coordination", "ai_governance"] as const;
 
 export type AuditAction = (typeof auditActions)[number];
 export type AuditResourceType = (typeof auditResourceTypes)[number];

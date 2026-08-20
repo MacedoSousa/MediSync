@@ -30,6 +30,7 @@ export function useAuth(options?: UseAuthOptions) {
         const userInfo: Auth.User = {
           id: apiUser.id,
           openId: apiUser.openId,
+          role: apiUser.role,
           name: apiUser.name,
           email: apiUser.email,
           loginMethod: apiUser.loginMethod,

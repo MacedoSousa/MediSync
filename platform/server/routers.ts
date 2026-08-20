@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { randomUUID } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import { z } from "zod";
 import { COOKIE_NAME } from "../shared/const.js";
 import * as db from "./db";
@@ -17,9 +17,12 @@ import { createSyntheticHealthScenario } from "../shared/testing/synthetic-healt
 import { createPersistedDemoAppointments, createPersistedDemoAssets } from "../shared/testing/persisted-demo-data";
 import { createEncryptedSyntheticHealthAsset, decryptSyntheticHealthAsset } from "./synthetic-health-asset";
 import { generateAssistiveSummary } from "./assistive-summary";
+import { ensureDefaultAssistiveGovernanceRule } from "./assistive-governance";
+import { decideGovernanceRuleReview, summarizeAssistiveGovernanceMetrics } from "../shared/assistive-governance-review";
+import { ASSISTIVE_TRANSPARENCY, canGenerateAssistiveSummary, normalizeAssistivePreference } from "../shared/assistive-transparency";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
 
 async function recordDeniedAccess(input: {
   actorUserId: number;
@@ -516,19 +519,130 @@ export const appRouter = router({
   assistiveSummary: router({
     generateDemoMine: protectedProcedure.mutation(async ({ ctx }) => {
       const now = new Date();
+      const correlationId = randomUUID();
+      const userEnabled = await db.getUserAssistiveAgentEnabled(ctx.user.id);
+      if (!canGenerateAssistiveSummary({ userEnabled, agentEnabled: true })) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "A IA assistiva está desativada nas suas preferências." });
+      }
+      const activeRule = await ensureDefaultAssistiveGovernanceRule();
       const scenario = createSyntheticHealthScenario();
       const result = await generateAssistiveSummary({
         patientId: String(ctx.user.id),
         authorizedSyntheticRecords: scenario.timeline,
         generatedAt: now,
       });
+      let reviewId: string | undefined;
+      if (activeRule) {
+        const responseReview = await db.createAssistiveResponseReviewIfAbsent({
+          id: randomUUID(),
+          patientUserId: ctx.user.id,
+          ruleRecordId: activeRule.id,
+          correlationId,
+          status: "approved",
+          reason: "approved",
+          responseFingerprint: createHash("sha256")
+            .update(JSON.stringify(result.summary.items.map((item) => [item.recordId, item.text])))
+            .digest("hex"),
+        });
+        if (responseReview.created) {
+          await db.recordAssistiveMetric({ id: randomUUID(), metricType: "generated", ruleRecordId: activeRule.id, correlationId, occurredAt: now });
+        }
+        reviewId = responseReview.review.id;
+      }
       await db.appendAuditEvent({
         id: randomUUID(), actorUserId: ctx.user.id, patientUserId: ctx.user.id,
         action: "assistive_summary_generated", resourceType: "assistive_summary", resourceId: randomUUID(),
-        purpose: "clinical_record_access", outcome: "success", correlationId: randomUUID(), occurredAt: now,
+        purpose: "clinical_record_access", outcome: "success", correlationId, occurredAt: now,
       });
-      return { ...result, syntheticNotice: scenario.notice };
+      return { ...result, syntheticNotice: scenario.notice, reviewId };
     }),
+  }),
+  assistiveTransparency: router({
+    getMine: protectedProcedure.query(async ({ ctx }) => ({
+      enabled: await db.getUserAssistiveAgentEnabled(ctx.user.id),
+      transparency: ASSISTIVE_TRANSPARENCY,
+    })),
+    setEnabled: protectedProcedure
+      .input(z.object({ enabled: z.boolean() }))
+      .mutation(async ({ ctx, input }) => {
+        const enabled = normalizeAssistivePreference(input.enabled);
+        const occurredAt = new Date();
+        await db.updateUserAssistiveAgentEnabled(ctx.user.id, enabled);
+        await db.appendAuditEvent({
+          id: randomUUID(), actorUserId: ctx.user.id, patientUserId: ctx.user.id,
+          action: "assistive_preference_updated", resourceType: "assistive_preference", resourceId: String(ctx.user.id),
+          purpose: "privacy_management", outcome: "success", correlationId: randomUUID(), occurredAt,
+        });
+        return { enabled };
+      }),
+  }),
+  assistiveGovernance: router({
+    listRules: adminProcedure.query(async () => {
+      await ensureDefaultAssistiveGovernanceRule();
+      return db.listGovernanceRules();
+    }),
+    listResponseReviewQueue: adminProcedure.query(async () => {
+      const reviews = await db.listPendingAssistiveResponseReviews();
+      return reviews.map(({ patientUserId: _patientUserId, responseFingerprint: _responseFingerprint, ...review }) => review);
+    }),
+    metrics: adminProcedure.query(async () => summarizeAssistiveGovernanceMetrics(await db.listAssistiveMetricEvents())),
+    decideRule: adminProcedure
+      .input(z.object({ ruleRecordId: z.string().trim().min(1).max(64), decision: z.enum(["approve", "reject", "disable"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const rule = await db.findGovernanceRuleById(input.ruleRecordId);
+        if (!rule) throw new TRPCError({ code: "NOT_FOUND", message: "Governance rule not found." });
+        const decision = decideGovernanceRuleReview({ rule, decision: input.decision });
+        const occurredAt = new Date();
+        await db.updateGovernanceRuleDecision({ id: rule.id, ...decision, reviewedAt: occurredAt });
+        await db.appendAuditEvent({
+          id: randomUUID(), actorUserId: ctx.user.id, patientUserId: ctx.user.id,
+          action: "assistive_governance_rule_reviewed", resourceType: "assistive_governance_rule", resourceId: rule.id,
+          purpose: "ai_governance", outcome: "success", correlationId: randomUUID(), occurredAt,
+        });
+        return { id: rule.id, ...decision };
+      }),
+    decideResponseReview: adminProcedure
+      .input(z.object({ reviewId: z.string().trim().min(1).max(64), decision: z.enum(["approve", "block"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const review = await db.findAssistiveResponseReviewById(input.reviewId);
+        if (!review) throw new TRPCError({ code: "NOT_FOUND", message: "Assistive response review not found." });
+        const occurredAt = new Date();
+        const status = input.decision === "approve" ? "approved" : "blocked" as const;
+        const correlationId = randomUUID();
+        await db.updateAssistiveResponseReview({ id: review.id, status, reviewerUserId: ctx.user.id, reviewedAt: occurredAt });
+        if (status === "blocked") {
+          await db.recordAssistiveMetric({ id: randomUUID(), metricType: "blocked", ruleRecordId: review.ruleRecordId, correlationId, occurredAt });
+        }
+        await db.appendAuditEvent({
+          id: randomUUID(), actorUserId: ctx.user.id, patientUserId: review.patientUserId,
+          action: "assistive_response_reviewed", resourceType: "assistive_response_review", resourceId: review.id,
+          purpose: "ai_governance", outcome: "success", correlationId, occurredAt,
+        });
+        return { id: review.id, status };
+      }),
+    submitFeedbackMine: protectedProcedure
+      .input(z.object({ reviewId: z.string().trim().min(1).max(64), feedback: z.enum(["helpful", "not_helpful", "safety_concern"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const review = await db.findAssistiveResponseReviewForPatient(input.reviewId, ctx.user.id);
+        if (!review) throw new TRPCError({ code: "NOT_FOUND", message: "Assistive response review not found." });
+        const status = input.feedback === "safety_concern" ? "pending" : review.status;
+        const occurredAt = new Date();
+        const correlationId = randomUUID();
+        await db.recordAssistiveFeedback({ id: review.id, feedback: input.feedback, status });
+        await db.recordAssistiveMetric({
+          id: randomUUID(),
+          metricType: `feedback_${input.feedback}`,
+          ruleRecordId: review.ruleRecordId,
+          correlationId,
+          occurredAt,
+        });
+        await db.appendAuditEvent({
+          id: randomUUID(), actorUserId: ctx.user.id, patientUserId: ctx.user.id,
+          action: "assistive_feedback_recorded", resourceType: "assistive_response_review", resourceId: review.id,
+          purpose: "ai_governance", outcome: "success", correlationId, occurredAt,
+        });
+        return { id: review.id, status };
+      }),
   }),
   syntheticAsset: router({
     listMine: protectedProcedure.query(async ({ ctx }) => {

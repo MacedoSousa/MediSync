@@ -25,6 +25,10 @@ const actionLabels = {
   reschedule_status_updated: "Andamento do reagendamento atualizado",
   synthetic_asset_viewed: "Ativo demonstrativo de saúde consultado",
   assistive_summary_generated: "Resumo assistivo gerado",
+  assistive_preference_updated: "Preferência da IA assistiva atualizada",
+  assistive_governance_rule_reviewed: "Regra de governança assistiva revisada",
+  assistive_response_reviewed: "Sinal assistivo revisado por responsável autorizado",
+  assistive_feedback_recorded: "Retorno sobre o resumo assistivo registrado",
 } as const;
 
 function formatAuditDate(value: Date) {

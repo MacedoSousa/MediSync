@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
 import { createDiscreteMedicationReminder } from "@/shared/medication-reminder-policy";
+import { shouldConfigureLocalReminder } from "@/shared/mobile-platform-parity";
 
 const REMINDER_NOTIFICATION_KEY = "medsync.discreteMedicationReminderId";
 const REMINDER_CHANNEL = "medsync-routine";
@@ -12,7 +13,7 @@ export type ReminderSetupResult =
   | { ok: false; reason: "unsupported" | "permission_denied" | "invalid_time" };
 
 export function configureMedicationReminderPresentation() {
-  if (Platform.OS === "web") return;
+  if (!shouldConfigureLocalReminder(Platform.OS)) return;
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldPlaySound: false,
@@ -24,7 +25,7 @@ export function configureMedicationReminderPresentation() {
 }
 
 async function ensureNotificationPermission() {
-  if (Platform.OS === "web") return false;
+  if (!shouldConfigureLocalReminder(Platform.OS)) return false;
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync(REMINDER_CHANNEL, {
       name: "Rotina de saúde",
@@ -48,7 +49,7 @@ export async function scheduleDiscreteMedicationReminder(time: string): Promise<
   } catch {
     return { ok: false, reason: "invalid_time" };
   }
-  if (Platform.OS === "web") return { ok: false, reason: "unsupported" };
+  if (!shouldConfigureLocalReminder(Platform.OS)) return { ok: false, reason: "unsupported" };
   if (!(await ensureNotificationPermission())) return { ok: false, reason: "permission_denied" };
 
   const existingId = await AsyncStorage.getItem(REMINDER_NOTIFICATION_KEY);
@@ -72,7 +73,7 @@ export async function scheduleDiscreteMedicationReminder(time: string): Promise<
 }
 
 export async function cancelDiscreteMedicationReminder() {
-  if (Platform.OS === "web") return;
+  if (!shouldConfigureLocalReminder(Platform.OS)) return;
   const existingId = await AsyncStorage.getItem(REMINDER_NOTIFICATION_KEY);
   if (existingId) await Notifications.cancelScheduledNotificationAsync(existingId);
   await AsyncStorage.removeItem(REMINDER_NOTIFICATION_KEY);

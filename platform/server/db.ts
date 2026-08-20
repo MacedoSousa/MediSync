@@ -3,11 +3,17 @@ import { drizzle } from "drizzle-orm/mysql2";
 import { createHash } from "crypto";
 import {
   auditEvents,
+  assistiveGovernanceRules,
+  assistiveMetricEvents,
+  assistiveResponseReviews,
   careContacts,
   caregiverGrants,
   confirmedAppointments,
   consentRecords,
   InsertCareContact,
+  InsertAssistiveGovernanceRuleRecord,
+  InsertAssistiveMetricEvent,
+  InsertAssistiveResponseReviewRecord,
   InsertConfirmedAppointmentRecord,
   InsertConsentRecord,
   InsertCaregiverGrant,
@@ -117,6 +123,19 @@ export async function getUserByOpenId(openId: string) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserAssistiveAgentEnabled(userId: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return true;
+  const result = await db.select({ enabled: users.assistiveAgentEnabled }).from(users).where(eq(users.id, userId)).limit(1);
+  return result[0]?.enabled ?? true;
+}
+
+export async function updateUserAssistiveAgentEnabled(userId: number, enabled: boolean): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(users).set({ assistiveAgentEnabled: enabled, updatedAt: new Date() }).where(eq(users.id, userId));
 }
 
 export async function createLegalRepresentativeLink(
@@ -540,6 +559,164 @@ export async function findSyntheticHealthAssetForPatient(id: string, patientUser
     .where(and(eq(syntheticHealthAssets.id, id), eq(syntheticHealthAssets.patientUserId, patientUserId), eq(syntheticHealthAssets.isSynthetic, true)))
     .limit(1);
   return rows[0];
+}
+
+export async function findGovernanceRuleByRuleVersion(ruleId: string, version: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(assistiveGovernanceRules)
+    .where(and(eq(assistiveGovernanceRules.ruleId, ruleId), eq(assistiveGovernanceRules.version, version)))
+    .limit(1);
+  return rows[0];
+}
+
+export async function findGovernanceRuleById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(assistiveGovernanceRules).where(eq(assistiveGovernanceRules.id, id)).limit(1);
+  return rows[0];
+}
+
+export async function createGovernanceRuleIfAbsent(rule: InsertAssistiveGovernanceRuleRecord) {
+  const existing = await findGovernanceRuleByRuleVersion(rule.ruleId, rule.version);
+  if (existing) return existing;
+  const db = await getDb();
+  if (!db) return undefined;
+  try {
+    await db.insert(assistiveGovernanceRules).values(rule);
+  } catch {
+    const retried = await findGovernanceRuleByRuleVersion(rule.ruleId, rule.version);
+    if (retried) return retried;
+    throw new Error("Governance rule could not be persisted.");
+  }
+  return rule;
+}
+
+export async function listGovernanceRules() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(assistiveGovernanceRules).orderBy(desc(assistiveGovernanceRules.reviewedAt));
+}
+
+export async function findActiveGovernanceRule() {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(assistiveGovernanceRules)
+    .where(and(eq(assistiveGovernanceRules.reviewStatus, "approved"), eq(assistiveGovernanceRules.enabled, true)))
+    .orderBy(desc(assistiveGovernanceRules.reviewedAt))
+    .limit(1);
+  return rows[0];
+}
+
+export async function updateGovernanceRuleDecision(input: {
+  id: string;
+  reviewStatus: InsertAssistiveGovernanceRuleRecord["reviewStatus"];
+  enabled: boolean;
+  reviewedAt: Date;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(assistiveGovernanceRules)
+    .set({ reviewStatus: input.reviewStatus, enabled: input.enabled, reviewedAt: input.reviewedAt, updatedAt: new Date() })
+    .where(eq(assistiveGovernanceRules.id, input.id));
+}
+
+export async function findAssistiveResponseReviewByCorrelation(correlationId: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(assistiveResponseReviews)
+    .where(eq(assistiveResponseReviews.correlationId, correlationId))
+    .limit(1);
+  return rows[0];
+}
+
+export async function findAssistiveResponseReviewById(id: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db.select().from(assistiveResponseReviews).where(eq(assistiveResponseReviews.id, id)).limit(1);
+  return rows[0];
+}
+
+export async function findAssistiveResponseReviewForPatient(id: string, patientUserId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(assistiveResponseReviews)
+    .where(and(eq(assistiveResponseReviews.id, id), eq(assistiveResponseReviews.patientUserId, patientUserId)))
+    .limit(1);
+  return rows[0];
+}
+
+export async function createAssistiveResponseReviewIfAbsent(review: InsertAssistiveResponseReviewRecord) {
+  const existing = await findAssistiveResponseReviewByCorrelation(review.correlationId);
+  if (existing) return { review: existing, created: false } as const;
+  const db = await getDb();
+  if (!db) return { review, created: false } as const;
+  try {
+    await db.insert(assistiveResponseReviews).values(review);
+  } catch {
+    const retried = await findAssistiveResponseReviewByCorrelation(review.correlationId);
+    if (retried) return { review: retried, created: false } as const;
+    throw new Error("Assistive response review could not be persisted.");
+  }
+  return { review, created: true } as const;
+}
+
+export async function listPendingAssistiveResponseReviews() {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(assistiveResponseReviews)
+    .where(eq(assistiveResponseReviews.status, "pending"))
+    .orderBy(desc(assistiveResponseReviews.updatedAt));
+}
+
+export async function updateAssistiveResponseReview(input: {
+  id: string;
+  status: InsertAssistiveResponseReviewRecord["status"];
+  reviewerUserId: number;
+  reviewedAt: Date;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(assistiveResponseReviews)
+    .set({ status: input.status, reviewerUserId: input.reviewerUserId, reviewedAt: input.reviewedAt, updatedAt: new Date() })
+    .where(eq(assistiveResponseReviews.id, input.id));
+}
+
+export async function recordAssistiveFeedback(input: {
+  id: string;
+  feedback: NonNullable<InsertAssistiveResponseReviewRecord["feedback"]>;
+  status: InsertAssistiveResponseReviewRecord["status"];
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(assistiveResponseReviews)
+    .set({ feedback: input.feedback, status: input.status, reviewerUserId: null, reviewedAt: null, updatedAt: new Date() })
+    .where(eq(assistiveResponseReviews.id, input.id));
+}
+
+export async function recordAssistiveMetric(metric: InsertAssistiveMetricEvent) {
+  const db = await getDb();
+  if (!db) return;
+  await db.insert(assistiveMetricEvents).values(metric);
+}
+
+export async function listAssistiveMetricEvents() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(assistiveMetricEvents).orderBy(desc(assistiveMetricEvents.occurredAt));
 }
 
 export async function revokeActiveCaregiverConsent(patientUserId: number, caregiverUserId: number): Promise<void> {

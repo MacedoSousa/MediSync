@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { randomUUID } from "crypto";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
@@ -7,6 +8,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
+import { createSafeRequestLog, resolveCorrelationId } from "../../shared/request-observability";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise((resolve) => {
@@ -30,6 +32,23 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  app.use((req, res, next) => {
+    const startedAt = performance.now();
+    const correlationId = resolveCorrelationId(req.header("x-correlation-id"), randomUUID);
+    res.locals.correlationId = correlationId;
+    res.setHeader("X-Correlation-Id", correlationId);
+    res.on("finish", () => {
+      console.info(JSON.stringify(createSafeRequestLog({
+        method: req.method,
+        url: req.originalUrl,
+        statusCode: res.statusCode,
+        durationMs: performance.now() - startedAt,
+        correlationId,
+      })));
+    });
+    next();
+  });
 
   // Enable CORS for all routes - reflect the request origin to support credentials
   app.use((req, res, next) => {
@@ -59,7 +78,7 @@ async function startServer() {
   registerOAuthRoutes(app);
 
   app.get("/api/health", (_req, res) => {
-    res.json({ ok: true, timestamp: Date.now() });
+    res.json({ ok: true, timestamp: Date.now(), correlationId: res.locals.correlationId });
   });
 
   app.use(
