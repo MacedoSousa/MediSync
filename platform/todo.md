@@ -104,3 +104,8 @@
 - [x] Configurar Cypress para regressão end-to-end da interface Web e cobrir inicialização, navegação responsiva e fluxos demonstrativos críticos.
 - [x] Corrigir a indisponibilidade do Metro por consumo de memória após a instalação do Cypress, preservando a prévia Web e a suíte end-to-end.
 - [x] Eliminar a divergência de hidratação React na exportação Web estática, identificada pela suíte Cypress, sem alterar o comportamento nativo.
+- [x] Criar documentação completa de portfólio do MedSync em português e inglês, com arquitetura, decisões, segurança, jornadas, validações e resultados verificáveis.
+- [x] Produzir e versionar evidências de execução, capturas de interface e registros de testes sem expor dados sensíveis.
+- [x] Gerar infográficos originais de arquitetura, segurança e jornada do produto para uso profissional.
+- [x] Gerar vídeo de apresentação profissional do MedSync com narrativa de problema, solução, arquitetura e qualidade.
+- [x] Criar cópias otimizadas dos ativos de portfólio para o repositório, preservando os originais de alta qualidade no armazenamento persistente do projeto.

@@ -58,6 +58,10 @@ Nunca reutilize a chave de desenvolvimento em produção. Consulte [`docker/READ
 | [Matriz do protótipo](docs/PROTOTYPE_EXECUTION_MATRIX.md) | Separação entre jornadas sintéticas entregues e ativações externas bloqueadas. |
 | [Aceite do protótipo](docs/PROTOTYPE_ACCEPTANCE.md) | Critérios de produto, limites de cada jornada e condição de saída para produção. |
 | [Validação automatizada](docs/VALIDATION_REPORT.md) | Evidências de lint, testes, tipo, build, esquema, API local e exportação Web. |
+| [Portfólio técnico — Português](docs/portfolio/PORTFOLIO.pt-BR.md) | Dossiê para candidatura: produto, arquitetura, segurança, limites, imagens e provas reproduzíveis. |
+| [Technical portfolio — English](docs/portfolio/PORTFOLIO.en.md) | English portfolio dossier with architecture, validation evidence, visuals, and responsible scope. |
+| [Provas de execução / Execution evidence](docs/portfolio/evidence/EXECUTION_EVIDENCE.md) | Comandos, resultados, capturas Cypress e condições de reprodução. |
+| [Notas dos ativos visuais / Visual asset notes](docs/portfolio/VISUAL_ASSET_NOTES.md) | Contexto e limites de interpretação dos infográficos e vídeo. |
 
 ## Licenciamento e produção
 

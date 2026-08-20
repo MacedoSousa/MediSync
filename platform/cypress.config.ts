@@ -14,6 +14,7 @@ export default defineConfig({
     openMode: 0,
     runMode: 1,
   },
+  screenshotsFolder: "docs/portfolio/evidence/cypress",
   screenshotOnRunFailure: true,
   video: false,
   viewportHeight: 844,

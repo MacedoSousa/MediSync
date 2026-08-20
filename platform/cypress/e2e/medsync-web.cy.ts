@@ -18,6 +18,7 @@ describe("MedSync Web — regressões críticas do protótipo", () => {
       .scrollIntoView()
       .should("be.visible");
     expectNoHorizontalOverflow(mobileViewport.width);
+    cy.screenshot("web-home-mobile", { capture: "fullPage" });
   });
 
   it("exibe os controles de privacidade na rota da conta", () => {
@@ -51,5 +52,6 @@ describe("MedSync Web — regressões críticas do protótipo", () => {
     cy.get('[role="tab"][aria-label="Exibir Farmácia"]').scrollIntoView().click({ force: true });
     cy.contains("Filtrar o catálogo fictício").should("be.visible");
     expectNoHorizontalOverflow(desktopViewport.width);
+    cy.screenshot("web-care-explorer-desktop", { capture: "fullPage" });
   });
 });
