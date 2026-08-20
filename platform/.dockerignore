@@ -1,0 +1,11 @@
+node_modules
+.expo
+dist
+.git
+.manus
+coverage
+*.log
+.env
+compose-*.txt
+docker-status.txt
+docker-build-*.log

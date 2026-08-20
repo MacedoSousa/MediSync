@@ -96,3 +96,7 @@
 - [x] Auditar a árvore local e a ramificação remota; restou somente o registro desta validação final, que será versionado ao encerramento.
 - [x] Executar validações automatizadas finais de lint, testes, tipos, build, migrações e prontidão operacional sem dispositivo físico ou parceiro real; a execução Docker ficou documentada como indisponível no sandbox.
 - [x] Registrar o resultado da validação e versionar os ajustes residuais de documentação no GitHub.
+- [x] Verificar o Docker Desktop e as instruções locais: servidor Docker 29.6.2 disponível, comando legado `docker-compose` presente e diretório local do projeto vazio.
+- [x] Subir banco, API e interface Web do MedSync pela composição Docker local sem remover dados ou contêineres existentes.
+- [x] Validar saúde, banco, API e interface Web no ambiente Docker local e registrar os endereços de teste.
+- [x] Corrigir a resolução de `react-native-css-interop` na exportação Web do Docker e revalidar a imagem limpa.
