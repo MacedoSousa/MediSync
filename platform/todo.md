@@ -1,0 +1,78 @@
+# Project TODO
+
+- [x] Formalizar o recorte do MVP Android centrado em paciente, responsável e cuidador.
+- [x] Definir a matriz de papéis, permissões, consentimentos e delegações de acesso.
+- [x] Mapear jornadas de consultas, histórico, exames, reagendamento, medicamentos e cuidados.
+- [x] Definir o modelo de dados clínico interoperável e a estratégia de integração nacional.
+- [x] Projetar criptografia, autenticação reforçada, auditoria imutável e segregação de acesso.
+- [x] Definir os limites clínicos, a governança e a explicabilidade do agente de IA assistivo.
+- [x] Planejar integrações progressivas com clínicas, hospitais, farmácias, SAMU e operadoras.
+- [x] Criar a arquitetura Clean Architecture com contratos, casos de uso e adaptadores.
+- [x] Implantar estratégia TDD, testes unitários, integração, contrato, acessibilidade e regressão.
+- [x] Implementar a fundação de navegação, tema acessível e telas de início do Android.
+- [x] Implementar armazenamento seguro e sessão protegida no aplicativo.
+- [x] Implementar histórico de saúde e medicamentos com dados de demonstração não clínicos.
+- [x] Implementar agenda e solicitação de reagendamento sem confirmação automática.
+- [ ] Implementar delegação de cuidador, lembretes e registros de tomada.
+- [ ] Implementar central de alertas assistivos com fonte, contexto e ação segura.
+- [x] Implementar privacidade, consentimentos e trilha de auditoria visível ao paciente.
+- [x] Gerar identidade visual original e configurar os ícones do aplicativo.
+- [ ] Validar critérios de aceite do MVP sob a perspectiva do paciente, clínica e farmácia.
+- [x] Criar o quadro Kanban, marcos, responsáveis e definição de pronto.
+- [ ] Preparar a expansão para portal Web e iOS sem duplicar regras de negócio.
+- [x] Validar a fundação inicial com foco em paciente, cuidador, segurança clínica e limites das integrações.
+- [x] Criar backlog detalhado de épicos, histórias de usuário, tarefas, dependências e critérios de aceite.
+- [x] Priorizar o backlog pela segurança clínica, privacidade, dependências e valor do MVP.
+- [ ] Executar o desenvolvimento estritamente na ordem de prioridade aprovada.
+- [x] US-001 — Criar base de qualidade, dados sintéticos e rastreabilidade de testes.
+- [x] US-002 — Implementar conta individual e sessão protegida.
+- [x] US-003 — Implementar vínculo de responsável legal ao paciente.
+- [x] US-004 — Implementar concessão de acesso mínimo para cuidador.
+- [x] US-005 — Implementar consentimentos, consulta e revogação.
+- [x] US-006 — Implementar trilha de auditoria imutável e visível ao paciente.
+- [x] US-007 — Implementar detecção e registro de tentativas de acesso indevido.
+- [x] US-008 — Implementar perfil, acessibilidade e contatos de cuidado.
+- [x] US-009 — Implementar linha do tempo clínica com proveniência.
+- [x] US-010 — Implementar detalhe seguro de registro e anexos protegidos.
+- [x] US-011 — Implementar dados de demonstração claramente identificados.
+- [x] US-012 — Preparar contrato de importação clínica com proveniência.
+- [x] US-013 — Implementar plano de medicamento sem inferência de dose.
+- [x] US-014 — Implementar registro de tomada rastreável.
+- [x] US-015 — Implementar lembretes discretos e preferências de notificação.
+- [x] US-016 — Aplicar escopo de cuidador à rotina de medicamentos.
+- [x] US-017 — Implementar alertas de rotina explicáveis e clinicamente limitados.
+- [x] US-018 — Implementar agenda de consultas confirmadas por fonte identificada.
+- [x] US-019 — Implementar solicitação de reagendamento rastreável.
+- [x] US-020 — Implementar adaptador seguro de agenda para parceiro demonstrativo; a habilitação produtiva continua bloqueada até a homologação externa.
+- [ ] US-020 — Homologar contrato e credenciais de parceiro real antes de habilitar atualizações externas em produção; o adaptador demonstrativo seguro está implementado.
+- [x] US-021 — Implementar resumo de IA assistivo com evidências.
+- [ ] US-022 — Implementar governança, revisão e desligamento do agente de IA.
+- [ ] US-023 — Informar uso e limites da IA ao paciente.
+- [ ] US-024 — Implementar busca de medicamento em farmácias parceiras.
+- [ ] US-025 — Implementar consulta de estado de receita digital autorizada.
+- [ ] US-026 — Implementar portal Web segregado por organização.
+- [ ] US-027 — Implementar fila institucional de solicitações de agenda.
+- [ ] US-028 — Implementar consulta de cobertura de operadoras autorizadas.
+- [ ] US-029 — Implementar painel regulatório de capacidade hospitalar com decisão humana.
+- [ ] US-030 — Validar paridade segura do núcleo no iOS.
+- [ ] US-031 — Implementar observabilidade, resposta a incidentes e recuperação testada.
+- [x] Executar autonomamente a US-002 conforme critérios de segurança, testes e revisão técnica definidos.
+- [ ] Concluir continuamente as US-003 a US-031 na ordem de prioridade, dependência e segurança definida no backlog.
+- [ ] Garantir que cada US restante tenha comportamento, acessibilidade e segurança equivalentes em Android, iOS e Web.
+- [ ] Validar a experiência Web responsiva e a paridade iOS antes da conclusão da US-030.
+- [x] Ampliar a responsividade visual e a acessibilidade de telas críticas para Android, iOS e Web.
+- [x] Estruturar documentos, resultados de exame e imagens sintéticas cifradas, rotuladas e auditáveis para testes.
+- [ ] Criar ativos fictícios de imagem clínica para demonstração, sem uso diagnóstico ou dados de pessoas reais.
+- [ ] Executar autonomamente as US-020 a US-031, mantendo a ordem do backlog, TDD, auditoria e checkpoints por marco.
+- [x] Implementar contingência local de emergência com acesso ao SAMU 192, contatos autorizados e funcionamento sem IA ou conectividade.
+- [x] Preparar artefatos Docker para uma IA assistiva personalizada, com interface interna, avaliação de segurança e sem dependência em fluxos de emergência.
+- [x] Implementar alertas de contingência com conteúdo clinicamente aprovado, consentimento expresso e confirmação humana; bloquear acionamento autônomo de contatos, pronto-socorro ou SAMU por IA.
+- [x] Corrigir sobreposições, estouros de conteúdo e ocupação indevida de tela em Android, iOS e Web.
+- [x] Diagnosticar e corrigir falhas de login que encerram ou bloqueiam o aplicativo.
+- [x] Restaurar o fluxo de criação e visualização de agendamentos para usuários autenticados.
+- [x] Criar composição Docker não destrutiva para banco MySQL, API e interface Web do MedSync.
+- [ ] Popular o ambiente demonstrativo com histórico, agendamentos, imagens e documentos estritamente sintéticos.
+- [x] Corrigir o callback de login que falha para a conta do usuário sem expor dados de sessão.
+- [x] Corrigir a sobreposição do cabeçalho com a Dynamic Island/status bar e refinar a navegação em telas compactas.
+- [x] Consolidar documentação técnica completa de arquitetura, dados, APIs, segurança, IA, Docker, testes e operação.
+- [ ] Revisar e versionar a entrega final no repositório GitHub MacedoSousa/MediSync com commit descritivo.

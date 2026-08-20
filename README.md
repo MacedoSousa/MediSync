@@ -1,4 +1,19 @@
 # MediSync
+
+> **Atualização de arquitetura — Agosto de 2026.** A implementação consolidada e documentada do MedSync está em [`platform/`](platform/). O diretório preserva o aplicativo Expo multiplataforma, API tRPC/Node.js, MySQL/Drizzle, testes, migrações, composição Docker e documentação operacional. A estrutura histórica `frontend/` e `backend/` permanece inalterada como referência do MVP inicial.
+
+## Plataforma consolidada
+
+| Área | Localização | Observação |
+|---|---|---|
+| Aplicativo Android, iOS e Web | [`platform/app`](platform/app) | Expo Router, área segura, autenticação e experiência responsiva. |
+| API e domínio | [`platform/server`](platform/server) e [`platform/shared`](platform/shared) | tRPC, autorização por titularidade, cifragem e auditoria. |
+| Banco e migrações | [`platform/drizzle`](platform/drizzle) | MySQL e Drizzle com migrações versionadas. |
+| Infraestrutura | [`platform/docker`](platform/docker) | Composição não destrutiva de banco, API e interface Web. |
+| Manual técnico | [`platform/docs`](platform/docs) | Segurança, API, operações e status de implementação. |
+
+Consulte [`platform/README.md`](platform/README.md) para instruções de execução, limites clínicos, dados demonstrativos e controles de segurança. O modo demonstrativo utiliza exclusivamente dados sintéticos, não representa consulta, receita, exame ou disponibilidade reais e não deve ser usado para decisão clínica ou emergência.
+
 ## Visão e Escopo (Resumo)
 
 **Visão:** Plataforma centralizada para gestão de saúde, integrando pacientes, médicos, clínicas, hospitais e farmácias, promovendo praticidade, segurança e acessibilidade.

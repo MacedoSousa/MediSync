@@ -1,0 +1,97 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1763372440610,
+      "tag": "0000_elite_eternals",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1787188605891,
+      "tag": "0001_tired_colossus",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787188777507,
+      "tag": "0002_serious_brood",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1787188906411,
+      "tag": "0003_secret_mimic",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1787189125463,
+      "tag": "0004_lame_longshot",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1787190301962,
+      "tag": "0005_greedy_thundra",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1787191603110,
+      "tag": "0006_loving_marten_broadcloak",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1787192013242,
+      "tag": "0007_confused_energizer",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1787192422450,
+      "tag": "0008_bent_kronos",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1787193114316,
+      "tag": "0009_sloppy_invisible_woman",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1787193908001,
+      "tag": "0010_lethal_thunderbolts",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1787194141973,
+      "tag": "0011_dusty_spacker_dave",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1787194681023,
+      "tag": "0012_jittery_zemo",
+      "breakpoints": true
+    }
+  ]
+}

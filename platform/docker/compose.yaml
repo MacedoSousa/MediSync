@@ -1,0 +1,75 @@
+name: medsync
+
+services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-medsync}
+      MYSQL_USER: ${MYSQL_USER:-medsync_app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?defina MYSQL_PASSWORD no arquivo .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?defina MYSQL_ROOT_PASSWORD no arquivo .env}
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_0900_ai_ci",
+      ]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - medsync_mysql:/var/lib/mysql
+    networks: [medsync_private]
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/api/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: mysql://${MYSQL_USER:-medsync_app}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE:-medsync}
+      MEDSYNC_FIELD_ENCRYPTION_KEY: ${MEDSYNC_FIELD_ENCRYPTION_KEY:?defina MEDSYNC_FIELD_ENCRYPTION_KEY no arquivo .env}
+      EXPO_PUBLIC_OAUTH_PORTAL_URL: ${EXPO_PUBLIC_OAUTH_PORTAL_URL:-}
+      EXPO_PUBLIC_OAUTH_SERVER_URL: ${EXPO_PUBLIC_OAUTH_SERVER_URL:-}
+      EXPO_PUBLIC_APP_ID: ${EXPO_PUBLIC_APP_ID:-}
+      EXPO_PUBLIC_OWNER_OPEN_ID: ${EXPO_PUBLIC_OWNER_OPEN_ID:-}
+      EXPO_PUBLIC_OWNER_NAME: ${EXPO_PUBLIC_OWNER_NAME:-}
+    command: ["sh", "-c", "pnpm drizzle-kit migrate && node dist/index.js"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "${API_PORT:-3000}:3000"
+    networks: [medsync_private, medsync_public]
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/web/Dockerfile
+      args:
+        EXPO_PUBLIC_API_BASE_URL: ${EXPO_PUBLIC_API_BASE_URL:-http://localhost:3000}
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    networks: [medsync_public]
+
+volumes:
+  medsync_mysql:
+
+networks:
+  medsync_private:
+    internal: true
+  medsync_public:

@@ -1,0 +1,30 @@
+services:
+  assistive-gateway:
+    build: .
+    ports:
+      - "127.0.0.1:8088:8088"
+    environment:
+      PORT: "8088"
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://llm:8080/v1}
+      LLM_MODEL: ${LLM_MODEL:-medsync-assistive}
+      ASSISTIVE_GATEWAY_TOKEN: ${ASSISTIVE_GATEWAY_TOKEN:?set_a_unique_gateway_token}
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  # Opt-in inference runtime. It must be run on a controlled host with a vetted GGUF model.
+  # Never expose this port publicly and never send identifiable health data to this proof-of-concept runtime.
+  llm:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    profiles: ["local-model"]
+    volumes:
+      - ${MEDSYNC_MODEL_DIRECTORY:?set_an_absolute_model_directory}:/models:ro
+    command: ["-m", "/models/medsync-assistive.gguf", "--host", "0.0.0.0", "--port", "8080", "--ctx-size", "4096"]
+    expose:
+      - "8080"
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

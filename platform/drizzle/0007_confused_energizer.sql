@@ -1,0 +1,2 @@
+ALTER TABLE `auditEvents` MODIFY COLUMN `action` enum('legal_representative_requested','legal_representative_verified','caregiver_granted','caregiver_revoked','consent_granted','consent_revoked','access_denied','health_record_viewed','care_contact_created','care_contact_removed','medication_intake_logged','medication_routine_viewed') NOT NULL;--> statement-breakpoint
+ALTER TABLE `auditEvents` MODIFY COLUMN `resourceType` enum('legal_representative','caregiver_grant','consent','health_record','care_contact','medication_intake','medication_routine') NOT NULL;
