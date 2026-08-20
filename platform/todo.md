@@ -93,3 +93,6 @@
 - [x] Completar o catálogo sintético de farmácia e os alertas de vigência com filtros, detalhes e ações bloqueadas no protótipo.
 - [x] Consolidar a disponibilidade da IA assistiva com estado operacional, resposta degradada segura e contingência local independente da IA.
 - [x] Atualizar testes, documentação, status de implementação e entrega GitHub ao fim de cada marco interno concluído.
+- [x] Auditar a árvore local e a ramificação remota; restou somente o registro desta validação final, que será versionado ao encerramento.
+- [x] Executar validações automatizadas finais de lint, testes, tipos, build, migrações e prontidão operacional sem dispositivo físico ou parceiro real; a execução Docker ficou documentada como indisponível no sandbox.
+- [x] Registrar o resultado da validação e versionar os ajustes residuais de documentação no GitHub.

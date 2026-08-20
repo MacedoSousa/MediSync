@@ -57,6 +57,7 @@ Nunca reutilize a chave de desenvolvimento em produção. Consulte [`docker/READ
 | [Status](docs/IMPLEMENTATION_STATUS.md) | Entregas concluídas e bloqueios externos. |
 | [Matriz do protótipo](docs/PROTOTYPE_EXECUTION_MATRIX.md) | Separação entre jornadas sintéticas entregues e ativações externas bloqueadas. |
 | [Aceite do protótipo](docs/PROTOTYPE_ACCEPTANCE.md) | Critérios de produto, limites de cada jornada e condição de saída para produção. |
+| [Validação automatizada](docs/VALIDATION_REPORT.md) | Evidências de lint, testes, tipo, build, esquema, API local e exportação Web. |
 
 ## Licenciamento e produção
 
