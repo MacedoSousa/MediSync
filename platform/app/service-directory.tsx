@@ -1,4 +1,4 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialIcons from "@/components/ui/material-icon";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";

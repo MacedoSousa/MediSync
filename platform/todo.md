@@ -100,3 +100,7 @@
 - [x] Subir banco, API e interface Web do MedSync pela composição Docker local sem remover dados ou contêineres existentes.
 - [x] Validar saúde, banco, API e interface Web no ambiente Docker local e registrar os endereços de teste.
 - [x] Corrigir a resolução de `react-native-css-interop` na exportação Web do Docker e revalidar a imagem limpa.
+- [x] Investigar a indisponibilidade relatada do servidor de desenvolvimento e restabelecer a prévia do MedSync.
+- [x] Configurar Cypress para regressão end-to-end da interface Web e cobrir inicialização, navegação responsiva e fluxos demonstrativos críticos.
+- [x] Corrigir a indisponibilidade do Metro por consumo de memória após a instalação do Cypress, preservando a prévia Web e a suíte end-to-end.
+- [x] Eliminar a divergência de hidratação React na exportação Web estática, identificada pela suíte Cypress, sem alterar o comportamento nativo.

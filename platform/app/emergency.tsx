@@ -1,4 +1,4 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialIcons from "@/components/ui/material-icon";
 import { router } from "expo-router";
 import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 

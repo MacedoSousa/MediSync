@@ -28,8 +28,9 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const initialInsets = initialWindowMetrics?.insets ?? DEFAULT_WEB_INSETS;
-  const initialFrame = initialWindowMetrics?.frame ?? DEFAULT_WEB_FRAME;
+  const isWeb = Platform.OS === "web";
+  const initialInsets = isWeb ? DEFAULT_WEB_INSETS : (initialWindowMetrics?.insets ?? DEFAULT_WEB_INSETS);
+  const initialFrame = isWeb ? DEFAULT_WEB_FRAME : (initialWindowMetrics?.frame ?? DEFAULT_WEB_FRAME);
 
   const [insets, setInsets] = useState<EdgeInsets>(initialInsets);
   const [frame, setFrame] = useState<Rect>(initialFrame);
@@ -69,7 +70,9 @@ export default function RootLayout() {
 
   // Ensure minimum 8px padding for top and bottom on mobile
   const providerInitialMetrics = useMemo(() => {
-    const metrics = initialWindowMetrics ?? { insets: initialInsets, frame: initialFrame };
+    const metrics = isWeb
+      ? { insets: initialInsets, frame: initialFrame }
+      : (initialWindowMetrics ?? { insets: initialInsets, frame: initialFrame });
     return {
       ...metrics,
       insets: {
@@ -78,7 +81,7 @@ export default function RootLayout() {
         bottom: Math.max(metrics.insets.bottom, 12),
       },
     };
-  }, [initialInsets, initialFrame]);
+  }, [initialFrame, initialInsets, isWeb]);
 
   const content = (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -113,7 +116,7 @@ export default function RootLayout() {
     </GestureHandlerRootView>
   );
 
-  const shouldOverrideSafeArea = Platform.OS === "web";
+  const shouldOverrideSafeArea = isWeb;
 
   if (shouldOverrideSafeArea) {
     return (

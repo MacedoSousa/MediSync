@@ -1,4 +1,4 @@
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialIcons from "@/components/ui/material-icon";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type IconName = React.ComponentProps<typeof MaterialIcons>["name"];
