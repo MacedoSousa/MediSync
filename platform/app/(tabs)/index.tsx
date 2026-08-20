@@ -91,6 +91,18 @@ export default function HomeScreen() {
             description="Solicitações transparentes e confirmação pela instituição."
             onPress={() => router.push("./agenda")}
           />
+          <CareAction
+            icon="travel-explore"
+            title="Buscar serviços"
+            description="Explore especialidades e opções fictícias neste protótipo."
+            onPress={() => router.push("/service-directory")}
+          />
+          <CareAction
+            icon="local-pharmacy"
+            title="Serviços e benefícios"
+            description="Cenários fictícios de teleatendimento, ofertas e vigências."
+            onPress={() => router.push("/prototype-services")}
+          />
         </View>
         <View style={styles.note}>
           <MaterialIcons name="info-outline" size={18} color="#075985" />

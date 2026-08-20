@@ -6,6 +6,8 @@ As histórias US-001 a US-019 possuem implementações e regressões no projeto:
 
 As histórias internas US-022, US-023, US-030 e US-031 também estão concluídas. A plataforma inclui fila administrativa de regras da IA, aprovação ou rejeição auditável, métricas agregadas sem conteúdo clínico, tela de transparência e desligamento individual, contratos de área segura/haptics/lembretes para iOS e observabilidade HTTP com `X-Correlation-Id`, logs sanitizados e verificação não destrutiva de recuperação.
 
+O protótipo autocontido inclui um diretório pesquisável de profissionais, especialidades e serviços inteiramente sintéticos, com filtros ilustrativos de SUS, convênio, modalidade e acessibilidade. Inclui também cenários de teleatendimento, contato, benefícios farmacêuticos e alertas de vigência, todos com selo de demonstração e bloqueio explícito de chamadas, mensagens, compras, reservas, consultas de estoque, preços, cobertura e atendimento externos.
+
 ## Implementado com ativação externa pendente
 
 | Item | Estado técnico | Bloqueio para produção |

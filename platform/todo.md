@@ -76,3 +76,20 @@
 - [x] Corrigir a sobreposição do cabeçalho com a Dynamic Island/status bar e refinar a navegação em telas compactas.
 - [x] Consolidar documentação técnica completa de arquitetura, dados, APIs, segurança, IA, Docker, testes e operação.
 - [ ] Revisar e versionar a entrega final no repositório GitHub MacedoSousa/MediSync com commit descritivo.
+- [ ] US-032 — Implementar matriz de acesso segregada por paciente, responsável, cuidador, profissional, organização de saúde, farmácia, operadora, regulação e administração, com escopo mínimo e auditoria.
+- [x] US-033 — Implementar diretório pesquisável demonstrativo de médicos, especialidades, clínicas e hospitais sintéticos, com filtros por convênio, SUS, disponibilidade declarada e acessibilidade.
+- [ ] US-034 — Integrar o diretório à agenda com rotas de solicitação, confirmação por fonte e links de orientação, sem inventar disponibilidade, cobertura ou rota assistencial.
+- [ ] US-035 — Implementar telemedicina e contato direto somente quando declarados disponíveis por parceiro autorizado, com consentimento, registro mínimo e contingência para indisponibilidade.
+- [ ] US-036 — Ampliar a busca de medicamentos para promoções, preço, estoque e vigência informados exclusivamente por farmácias parceiras homologadas.
+- [ ] US-037 — Implementar alertas de vigência e datas para consentimentos, agendamentos, documentos autorizados, receitas digitais verificadas e benefícios, sem inferência clínica.
+- [ ] US-038 — Evoluir a disponibilidade assistiva com monitoramento, resposta degradada segura e contingência determinística de emergência, sem triagem, diagnóstico ou decisão clínica autônoma.
+- [x] Reorientar US-032 a US-038 para um protótipo autocontido, sem clientes, estabelecimentos, credenciais ou integrações externas reais.
+- [x] Criar diretório, disponibilidade, teleatendimento, ofertas de farmácia e vigências exclusivamente sintéticos, com selo de demonstração e bloqueio de ações reais.
+- [x] Consolidar uma matriz de implementação que separe cada dependência de homologação externa das funcionalidades demonstrativas concluíveis internamente.
+- [ ] Versionar no GitHub o marco de diretório, serviços sintéticos, limites clínicos e documentação do protótipo.
+- [ ] Implementar seletor demonstrativo de perfil e portais responsivos para paciente, cuidador, profissional, organização, farmácia, operadora, regulação e administração, com escopo mínimo e auditoria simulada.
+- [ ] Implementar painéis institucionais sintéticos de fila de agenda, cobertura, receita digital e capacidade, sempre rotulados e sem decisão, confirmação ou encaminhamento real.
+- [ ] Integrar o diretório demonstrativo a cenários de solicitação de agenda, orientação e teleatendimento sem contato externo.
+- [ ] Completar o catálogo sintético de farmácia e os alertas de vigência com filtros, detalhes e ações bloqueadas no protótipo.
+- [ ] Consolidar a disponibilidade da IA assistiva com estado operacional, resposta degradada segura e contingência local independente da IA.
+- [ ] Atualizar testes, documentação, status de implementação e entrega GitHub ao fim de cada marco interno concluído.
