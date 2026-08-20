@@ -1,4 +1,5 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { Alert, FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -15,13 +16,13 @@ import {
 const directoryEntries = createDemoServiceDirectory();
 const specialties = ["Todas", ...new Set(directoryEntries.map((entry) => entry.specialty))] as const;
 const healthPlans = ["Todos", ...new Set(directoryEntries.flatMap((entry) => entry.healthPlans))] as const;
-const accessibilityOptions: ReadonlyArray<{ label: string; value?: DemoAccessibilityOption }> = [
+const accessibilityOptions: readonly { label: string; value?: DemoAccessibilityOption }[] = [
   { label: "Todas" },
   { label: "Mobilidade", value: "mobility" },
   { label: "Visual", value: "visual" },
   { label: "Auditiva", value: "hearing" },
 ];
-const modalities: ReadonlyArray<{ label: string; value?: DemoServiceModality }> = [
+const modalities: readonly { label: string; value?: DemoServiceModality }[] = [
   { label: "Todas" },
   { label: "Presencial", value: "in_person" },
   { label: "Teleatendimento", value: "telehealth" },
@@ -42,6 +43,7 @@ function FilterChip({ label, selected, onPress }: { label: string; selected: boo
 }
 
 export default function ServiceDirectoryScreen() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [specialty, setSpecialty] = useState("Todas");
   const [modality, setModality] = useState<DemoServiceModality | undefined>();
@@ -153,6 +155,15 @@ export default function ServiceDirectoryScreen() {
               <Text style={styles.sourceLabel}>{item.source.label}</Text>
               <Pressable
                 accessibilityRole="button"
+                accessibilityLabel={`Ver cenário de agenda demonstrativa para ${item.name}`}
+                onPress={() => router.push("../prototype-care-explorer")}
+                style={({ pressed }) => [styles.agendaButton, pressed && styles.detailButtonPressed]}
+              >
+                <MaterialIcons name="event" size={16} color="#075985" />
+                <Text style={styles.agendaButtonText}>Agenda</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
                 accessibilityLabel={`Ver estado demonstrativo de ${item.name}`}
                 onPress={() => Alert.alert("Ação demonstrativa", "Este protótipo não envia pedidos, não inicia chamadas e não contata estabelecimentos reais.")}
                 style={({ pressed }) => [styles.detailButton, pressed && styles.detailButtonPressed]}
@@ -199,6 +210,8 @@ const styles = StyleSheet.create({
   detailButton: { borderColor: "#075985", borderRadius: 11, borderWidth: 1, minHeight: 34, justifyContent: "center", paddingHorizontal: 12 },
   detailButtonPressed: { backgroundColor: "#F0F9FF", opacity: 0.85 },
   detailButtonText: { color: "#075985", fontSize: 13, fontWeight: "800" },
+  agendaButton: { alignItems: "center", borderColor: "#075985", borderRadius: 11, borderWidth: 1, flexDirection: "row", gap: 5, minHeight: 34, paddingHorizontal: 10 },
+  agendaButtonText: { color: "#075985", fontSize: 12, fontWeight: "800" },
   emptyCard: { alignItems: "center", backgroundColor: "#F6FAFC", borderColor: "#DCE8EE", borderRadius: 18, borderWidth: 1, gap: 8, marginTop: 4, padding: 22 },
   emptyTitle: { color: "#172033", fontSize: 16, fontWeight: "800", textAlign: "center" },
   emptyText: { color: "#526070", fontSize: 13, lineHeight: 19, textAlign: "center" },

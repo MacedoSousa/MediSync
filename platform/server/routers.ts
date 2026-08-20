@@ -17,9 +17,10 @@ import { createSyntheticHealthScenario } from "../shared/testing/synthetic-healt
 import { createPersistedDemoAppointments, createPersistedDemoAssets } from "../shared/testing/persisted-demo-data";
 import { createEncryptedSyntheticHealthAsset, decryptSyntheticHealthAsset } from "./synthetic-health-asset";
 import { generateAssistiveSummary } from "./assistive-summary";
-import { ensureDefaultAssistiveGovernanceRule } from "./assistive-governance";
+import { ensureDefaultAssistiveGovernanceRule, getAssistiveAgentControl } from "./assistive-governance";
 import { decideGovernanceRuleReview, summarizeAssistiveGovernanceMetrics } from "../shared/assistive-governance-review";
 import { ASSISTIVE_TRANSPARENCY, canGenerateAssistiveSummary, normalizeAssistivePreference } from "../shared/assistive-transparency";
+import { deriveAssistiveOperationalStatus } from "../shared/assistive-operational-status";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
@@ -517,12 +518,24 @@ export const appRouter = router({
       }),
   }),
   assistiveSummary: router({
+    operationalStatusMine: protectedProcedure.query(async ({ ctx }) =>
+      deriveAssistiveOperationalStatus({
+        userEnabled: await db.getUserAssistiveAgentEnabled(ctx.user.id),
+        governanceEnabled: (await getAssistiveAgentControl()).enabled,
+      }),
+    ),
     generateDemoMine: protectedProcedure.mutation(async ({ ctx }) => {
       const now = new Date();
       const correlationId = randomUUID();
       const userEnabled = await db.getUserAssistiveAgentEnabled(ctx.user.id);
-      if (!canGenerateAssistiveSummary({ userEnabled, agentEnabled: true })) {
-        throw new TRPCError({ code: "FORBIDDEN", message: "A IA assistiva está desativada nas suas preferências." });
+      const agentControl = await getAssistiveAgentControl();
+      if (!canGenerateAssistiveSummary({ userEnabled, agentEnabled: agentControl.enabled })) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: userEnabled
+            ? "A organização assistiva está temporariamente bloqueada pela governança de segurança."
+            : "A IA assistiva está desativada nas suas preferências.",
+        });
       }
       const activeRule = await ensureDefaultAssistiveGovernanceRule();
       const scenario = createSyntheticHealthScenario();

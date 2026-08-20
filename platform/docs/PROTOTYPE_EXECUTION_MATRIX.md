@@ -36,4 +36,4 @@ Cada funcionalidade demonstrativa deve exibir proveniência `Demonstração MedS
 
 ## Sequência de implementação
 
-O ciclo prioriza primeiro o seletor de perfis e os portais, pois eles definem o escopo de cada visão. Em seguida, serão construídos os painéis institucionais, as conexões demonstrativas entre diretório e agenda, o catálogo farmacêutico e os alertas. Por último, a disponibilidade da IA será consolidada por estados observáveis e pela contingência local já existente. A ativação de produção continua fora deste ciclo.
+O seletor de perfis, os portais, os painéis institucionais, as conexões demonstrativas entre diretório e agenda, o catálogo farmacêutico, os alertas e o estado operacional da IA foram concluídos neste ciclo. A ativação de produção continua fora deste ciclo e requer exclusivamente as condições de homologação listadas neste documento.

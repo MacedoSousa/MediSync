@@ -55,6 +55,8 @@ Nunca reutilize a chave de desenvolvimento em produção. Consulte [`docker/READ
 | [Segurança](docs/SECURITY.md) | Cifragem, auditoria, consentimento e resposta a incidentes. |
 | [Operação](docs/OPERATIONS.md) | Ambientes, Docker, testes, observabilidade e recuperação. |
 | [Status](docs/IMPLEMENTATION_STATUS.md) | Entregas concluídas e bloqueios externos. |
+| [Matriz do protótipo](docs/PROTOTYPE_EXECUTION_MATRIX.md) | Separação entre jornadas sintéticas entregues e ativações externas bloqueadas. |
+| [Aceite do protótipo](docs/PROTOTYPE_ACCEPTANCE.md) | Critérios de produto, limites de cada jornada e condição de saída para produção. |
 
 ## Licenciamento e produção
 

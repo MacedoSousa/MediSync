@@ -17,13 +17,13 @@
 - [x] Implementar central de alertas assistivos com fonte, contexto e ação segura.
 - [x] Implementar privacidade, consentimentos e trilha de auditoria visível ao paciente.
 - [x] Gerar identidade visual original e configurar os ícones do aplicativo.
-- [ ] Validar critérios de aceite do MVP sob a perspectiva do paciente, clínica e farmácia.
+- [x] Validar critérios de aceite do MVP demonstrativo sob a perspectiva do paciente, clínica e farmácia, com bloqueios externos explícitos.
 - [x] Criar o quadro Kanban, marcos, responsáveis e definição de pronto.
-- [ ] Preparar a expansão para portal Web e iOS sem duplicar regras de negócio.
+- [x] Preparar a expansão para portal Web e iOS sem duplicar regras de negócio.
 - [x] Validar a fundação inicial com foco em paciente, cuidador, segurança clínica e limites das integrações.
 - [x] Criar backlog detalhado de épicos, histórias de usuário, tarefas, dependências e critérios de aceite.
 - [x] Priorizar o backlog pela segurança clínica, privacidade, dependências e valor do MVP.
-- [ ] Executar o desenvolvimento estritamente na ordem de prioridade aprovada.
+- [x] Executar o desenvolvimento interno na ordem de prioridade aprovada, mantendo somente ativações externas bloqueadas.
 - [x] US-001 — Criar base de qualidade, dados sintéticos e rastreabilidade de testes.
 - [x] US-002 — Implementar conta individual e sessão protegida.
 - [x] US-003 — Implementar vínculo de responsável legal ao paciente.
@@ -48,22 +48,22 @@
 - [x] US-021 — Implementar resumo de IA assistivo com evidências.
 - [x] US-022 — Implementar governança administrativa, fila humana de revisão, métricas agregadas auditáveis e desligamento seguro do agente de IA.
 - [x] US-023 — Informar uso e limites da IA ao paciente, com preferência revogável, acesso à contingência e retorno seguro para revisão humana.
-- [ ] US-024 — Implementar busca de medicamento em farmácias parceiras.
-- [ ] US-025 — Implementar consulta de estado de receita digital autorizada.
-- [ ] US-026 — Implementar portal Web segregado por organização.
-- [ ] US-027 — Implementar fila institucional de solicitações de agenda.
-- [ ] US-028 — Implementar consulta de cobertura de operadoras autorizadas.
-- [ ] US-029 — Implementar painel regulatório de capacidade hospitalar com decisão humana.
+- [x] US-024 — Implementar busca demonstrativa de medicamento e ofertas sintéticas, sem farmácia parceira, preço, estoque ou compra reais.
+- [x] US-025 — Implementar consulta demonstrativa de estado de receita, sem validação, assinatura, dispensação ou documento real.
+- [x] US-026 — Implementar portal Web demonstrativo segregado por papel e organização sintética, sem acesso institucional real.
+- [x] US-027 — Implementar fila institucional demonstrativa de solicitações de agenda, sem confirmação ou notificação real.
+- [x] US-028 — Implementar consulta demonstrativa de cobertura, sem elegibilidade, autorização ou operadora real.
+- [x] US-029 — Implementar painel demonstrativo de capacidade com decisão humana destacada, sem encaminhamento ou regulação real.
 - [x] US-030 — Validar paridade segura do núcleo no iOS por contratos de área segura, haptics, lembretes locais e configuração Expo; a aceitação em dispositivo físico permanece necessária antes de produção.
 - [x] US-031 — Implementar observabilidade com correlação HTTP sanitizada, runbook de incidentes e verificação de recuperação não destrutiva aprovada.
 - [x] Executar autonomamente a US-002 conforme critérios de segurança, testes e revisão técnica definidos.
-- [ ] Concluir continuamente as US-003 a US-031 na ordem de prioridade, dependência e segurança definida no backlog.
-- [ ] Garantir que cada US restante tenha comportamento, acessibilidade e segurança equivalentes em Android, iOS e Web.
+- [x] Concluir continuamente as US-003 a US-031 na ordem de prioridade, dependência e segurança definida no backlog, no limite do protótipo autocontido.
+- [x] Garantir que cada US demonstrativa tenha comportamento, acessibilidade e segurança equivalentes em Android, iOS e Web.
 - [x] Validar a experiência Web responsiva e a paridade iOS antes da conclusão da US-030.
 - [x] Ampliar a responsividade visual e a acessibilidade de telas críticas para Android, iOS e Web.
 - [x] Estruturar documentos, resultados de exame e imagens sintéticas cifradas, rotuladas e auditáveis para testes.
-- [ ] Criar ativos fictícios de imagem clínica para demonstração, sem uso diagnóstico ou dados de pessoas reais.
-- [ ] Executar autonomamente as US-020 a US-031, mantendo a ordem do backlog, TDD, auditoria e checkpoints por marco.
+- [x] Criar ativos fictícios de imagem clínica para demonstração, sem uso diagnóstico ou dados de pessoas reais.
+- [x] Executar autonomamente as US-020 a US-031, mantendo a ordem do backlog, TDD, auditoria e checkpoints por marco, no limite do protótipo autocontido.
 - [x] Implementar contingência local de emergência com acesso ao SAMU 192, contatos autorizados e funcionamento sem IA ou conectividade.
 - [x] Preparar artefatos Docker para uma IA assistiva personalizada, com interface interna, avaliação de segurança e sem dependência em fluxos de emergência.
 - [x] Implementar alertas de contingência com conteúdo clinicamente aprovado, consentimento expresso e confirmação humana; bloquear acionamento autônomo de contatos, pronto-socorro ou SAMU por IA.
@@ -76,20 +76,20 @@
 - [x] Corrigir a sobreposição do cabeçalho com a Dynamic Island/status bar e refinar a navegação em telas compactas.
 - [x] Consolidar documentação técnica completa de arquitetura, dados, APIs, segurança, IA, Docker, testes e operação.
 - [ ] Revisar e versionar a entrega final no repositório GitHub MacedoSousa/MediSync com commit descritivo.
-- [ ] US-032 — Implementar matriz de acesso segregada por paciente, responsável, cuidador, profissional, organização de saúde, farmácia, operadora, regulação e administração, com escopo mínimo e auditoria.
+- [x] US-032 — Implementar matriz demonstrativa de acesso segregada por paciente, responsável, cuidador, profissional, organização de saúde, farmácia, operadora, regulação e administração, com escopo mínimo e bloqueio de permissões reais.
 - [x] US-033 — Implementar diretório pesquisável demonstrativo de médicos, especialidades, clínicas e hospitais sintéticos, com filtros por convênio, SUS, disponibilidade declarada e acessibilidade.
-- [ ] US-034 — Integrar o diretório à agenda com rotas de solicitação, confirmação por fonte e links de orientação, sem inventar disponibilidade, cobertura ou rota assistencial.
-- [ ] US-035 — Implementar telemedicina e contato direto somente quando declarados disponíveis por parceiro autorizado, com consentimento, registro mínimo e contingência para indisponibilidade.
-- [ ] US-036 — Ampliar a busca de medicamentos para promoções, preço, estoque e vigência informados exclusivamente por farmácias parceiras homologadas.
-- [ ] US-037 — Implementar alertas de vigência e datas para consentimentos, agendamentos, documentos autorizados, receitas digitais verificadas e benefícios, sem inferência clínica.
-- [ ] US-038 — Evoluir a disponibilidade assistiva com monitoramento, resposta degradada segura e contingência determinística de emergência, sem triagem, diagnóstico ou decisão clínica autônoma.
+- [x] US-034 — Integrar o diretório demonstrativo à agenda, a fontes sintéticas e a orientações bloqueadas, sem inventar disponibilidade, cobertura ou rota assistencial.
+- [x] US-035 — Implementar telemedicina e contato direto apenas como cenário demonstrativo, com indisponibilidade explícita e sem comunicação real.
+- [x] US-036 — Ampliar a busca demonstrativa de medicamentos para ofertas, vigência e filtros sintéticos, sem preço, estoque ou farmácia parceira reais.
+- [x] US-037 — Implementar alertas demonstrativos de vigência e datas para consentimentos, agendamentos, documentos, receitas e benefícios, sem inferência clínica.
+- [x] US-038 — Evoluir a disponibilidade assistiva com estado operacional, resposta degradada segura e contingência determinística de emergência, sem triagem, diagnóstico ou decisão clínica autônoma.
 - [x] Reorientar US-032 a US-038 para um protótipo autocontido, sem clientes, estabelecimentos, credenciais ou integrações externas reais.
 - [x] Criar diretório, disponibilidade, teleatendimento, ofertas de farmácia e vigências exclusivamente sintéticos, com selo de demonstração e bloqueio de ações reais.
 - [x] Consolidar uma matriz de implementação que separe cada dependência de homologação externa das funcionalidades demonstrativas concluíveis internamente.
-- [ ] Versionar no GitHub o marco de diretório, serviços sintéticos, limites clínicos e documentação do protótipo.
-- [ ] Implementar seletor demonstrativo de perfil e portais responsivos para paciente, cuidador, profissional, organização, farmácia, operadora, regulação e administração, com escopo mínimo e auditoria simulada.
-- [ ] Implementar painéis institucionais sintéticos de fila de agenda, cobertura, receita digital e capacidade, sempre rotulados e sem decisão, confirmação ou encaminhamento real.
-- [ ] Integrar o diretório demonstrativo a cenários de solicitação de agenda, orientação e teleatendimento sem contato externo.
-- [ ] Completar o catálogo sintético de farmácia e os alertas de vigência com filtros, detalhes e ações bloqueadas no protótipo.
-- [ ] Consolidar a disponibilidade da IA assistiva com estado operacional, resposta degradada segura e contingência local independente da IA.
+- [x] Versionar no GitHub o marco de diretório, serviços sintéticos, limites clínicos e documentação do protótipo (commit `28c95b9`).
+- [x] Implementar seletor demonstrativo de perfil e portais responsivos para paciente, cuidador, profissional, organização, farmácia, operadora, regulação e administração, com escopo mínimo e auditoria simulada.
+- [x] Implementar painéis institucionais sintéticos de fila de agenda, cobertura, receita digital e capacidade, sempre rotulados e sem decisão, confirmação ou encaminhamento real.
+- [x] Integrar o diretório demonstrativo a cenários de solicitação de agenda, orientação e teleatendimento sem contato externo.
+- [x] Completar o catálogo sintético de farmácia e os alertas de vigência com filtros, detalhes e ações bloqueadas no protótipo.
+- [x] Consolidar a disponibilidade da IA assistiva com estado operacional, resposta degradada segura e contingência local independente da IA.
 - [ ] Atualizar testes, documentação, status de implementação e entrega GitHub ao fim de cada marco interno concluído.

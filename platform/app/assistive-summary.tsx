@@ -14,6 +14,9 @@ export default function AssistiveSummaryScreen() {
   const [summary, setSummary] = useState<AssistiveSummary>();
   const [mode, setMode] = useState<"model" | "deterministic_fallback">();
   const [reviewId, setReviewId] = useState<string>();
+  const operationalStatusQuery = trpc.assistiveSummary.operationalStatusMine.useQuery(undefined, {
+    enabled: isAuthenticated && !loading,
+  });
   const mutation = trpc.assistiveSummary.generateDemoMine.useMutation({
     onSuccess: (result) => {
       setSummary(result.summary);
@@ -24,6 +27,9 @@ export default function AssistiveSummaryScreen() {
   const feedbackMutation = trpc.assistiveGovernance.submitFeedbackMine.useMutation();
 
   const isBusy = loading || mutation.isPending;
+  const operationalStatus = operationalStatusQuery.data;
+  const isOperational = operationalStatus?.state === "available_with_fallback";
+  const generationBlocked = !isAuthenticated || isBusy || operationalStatus?.canGenerate === false;
 
   return (
     <ScreenContainer className="px-5" containerClassName="bg-background" edges={["top", "bottom", "left", "right"]}>
@@ -42,6 +48,13 @@ export default function AssistiveSummaryScreen() {
             <View style={styles.safetyCard}>
               <MaterialIcons name="verified-user" size={21} color="#075985" />
               <Text style={styles.safetyText}>Nesta etapa, o resumo usa somente registros fictícios. Ele não faz diagnóstico, prescrição, cálculo de dose, prognóstico ou decisão de cuidado.</Text>
+            </View>
+            <View style={[styles.operationalCard, !isOperational && styles.operationalWarningCard]} accessibilityLabel={operationalStatus?.label ?? "Verificando disponibilidade segura da organização assistiva"}>
+              <MaterialIcons name={isOperational ? "shield" : "shield-moon"} size={21} color={isOperational ? "#166534" : "#9A6700"} />
+              <View style={styles.operationalCopy}>
+                <Text style={[styles.operationalTitle, !isOperational && styles.operationalWarningTitle]}>{operationalStatus?.label ?? "Verificando disponibilidade segura"}</Text>
+                <Text style={[styles.operationalText, !isOperational && styles.operationalWarningText]}>{operationalStatus?.description ?? "A disponibilidade será confirmada antes de gerar um resumo."}</Text>
+              </View>
             </View>
             <Pressable
               accessibilityRole="button"
@@ -65,9 +78,9 @@ export default function AssistiveSummaryScreen() {
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Gerar resumo assistivo dos dados de demonstração"
-              disabled={!isAuthenticated || isBusy}
+              disabled={generationBlocked}
               onPress={() => mutation.mutate()}
-              style={({ pressed }) => [styles.generateButton, (pressed || !isAuthenticated || isBusy) && styles.generateButtonPressed]}
+              style={({ pressed }) => [styles.generateButton, (pressed || generationBlocked) && styles.generateButtonPressed]}
             >
               {isBusy ? <ActivityIndicator color="#FFFFFF" /> : <MaterialIcons name="auto-awesome" size={20} color="#FFFFFF" />}
               <Text style={styles.generateText}>{isBusy ? "Organizando registros..." : "Gerar resumo de demonstração"}</Text>
@@ -119,6 +132,13 @@ const styles = StyleSheet.create({
   itemText: { color: "#172033", fontSize: 15, fontWeight: "700", lineHeight: 21 },
   listTitle: { color: "#172033", fontSize: 17, fontWeight: "800", marginTop: 22 },
   modeText: { color: "#526070", fontSize: 12, fontWeight: "700" },
+  operationalCard: { alignItems: "flex-start", backgroundColor: "#F0FDF4", borderColor: "#86EFAC", borderRadius: 16, borderWidth: 1, flexDirection: "row", gap: 10, marginTop: 12, padding: 14 },
+  operationalCopy: { flex: 1, gap: 4 },
+  operationalText: { color: "#166534", fontSize: 12, lineHeight: 18 },
+  operationalTitle: { color: "#166534", fontSize: 13, fontWeight: "800" },
+  operationalWarningCard: { backgroundColor: "#FFFAEB", borderColor: "#FEDF89" },
+  operationalWarningText: { color: "#9A6700" },
+  operationalWarningTitle: { color: "#9A6700" },
   safetyCard: { alignItems: "flex-start", backgroundColor: "#E0F2FE", borderColor: "#BAE6FD", borderRadius: 16, borderWidth: 1, flexDirection: "row", gap: 10, marginTop: 20, padding: 14 },
   safetyText: { color: "#24506A", flex: 1, fontSize: 13, lineHeight: 19 },
   transparencyButton: { alignItems: "center", backgroundColor: "#FFFFFF", borderColor: "#BAE6FD", borderRadius: 14, borderWidth: 1, flexDirection: "row", gap: 9, marginTop: 12, minHeight: 48, paddingHorizontal: 14 },

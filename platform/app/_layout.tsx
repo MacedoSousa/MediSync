@@ -98,6 +98,9 @@ export default function RootLayout() {
               <Stack.Screen name="health-asset-detail" />
               <Stack.Screen name="service-directory" />
               <Stack.Screen name="prototype-services" />
+              <Stack.Screen name="prototype-portals" />
+              <Stack.Screen name="institutional-demo" />
+              <Stack.Screen name="prototype-care-explorer" />
               <Stack.Screen name="assistive-summary" />
               <Stack.Screen name="ai-transparency" />
               <Stack.Screen name="ai-governance" />

@@ -103,6 +103,18 @@ export default function HomeScreen() {
             description="Cenários fictícios de teleatendimento, ofertas e vigências."
             onPress={() => router.push("/prototype-services")}
           />
+          <CareAction
+            icon="manage-search"
+            title="Agenda e catálogo"
+            description="Filtre solicitações, rótulos de medicamento e datas demonstrativas."
+            onPress={() => router.push("../prototype-care-explorer")}
+          />
+          <CareAction
+            icon="account-tree"
+            title="Portais por função"
+            description="Conheça os acessos demonstrativos segregados por perfil."
+            onPress={() => router.push("../prototype-portals")}
+          />
         </View>
         <View style={styles.note}>
           <MaterialIcons name="info-outline" size={18} color="#075985" />
